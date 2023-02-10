@@ -2,6 +2,8 @@ import csv
 import time
 import json
 
+import pandas as pd
+
 """
 Note : For test cases 7-10, you need to extract the required data (filter on conditions mentioned above)
 and rename it to appropriate name as mentioned in the test case descriptions. You need to write the code
@@ -28,28 +30,28 @@ def data_filtering(filelocation, num):
          if num == 4 -> filter data based on primary Names which start with vowel character.
 
     """
-    df = # Load the imdb_dataset.csv dataset
+    #df = # Load the imdb_dataset.csv dataset
     if(num==1):
         #NEED TO CODE
         #Implement your logic here for Filtering data based on years (years in range 1941 to 1955)
-        df_year = #Store your filtered dataframe here
+        #df_year = #Store your filtered dataframe here
         df_year.reset_index(drop=True).to_csv("imdb_years_df.csv", index=False)
 
     if(num==2):
         #NEED TO CODE
         #Implement your logic here for Filtering data based on genres (genres are either ‘Adventure’ or ‘Drama’)
-        df_genres = #Store your filtered dataframe here
+        #df_genres = #Store your filtered dataframe here
         df_genres.reset_index(drop=True).to_csv("imdb_genres_df.csv", index=False)
     if(num==3):
         #NEED TO CODE
         #Implement your logic here for Filtering data based on primaryProfession (if primaryProfession column contains
         #substrings {‘assistant_director’, ‘casting_director’, ‘art_director’, ‘cinematographer’} )
-        df_professions = #Store your filtered dataframe here
+        #df_professions = #Store your filtered dataframe here
         df_professions.reset_index(drop=True).to_csv("imdb_professions_df.csv", index=False)
     if(num==4):
         #NEED TO CODE
         #Implement your logic here for Filtering data based on primary Names which start with vowel character.
-        df_vowels = #Store your filtered dataframe here
+        #df_vowels = #Store your filtered dataframe here
         df_vowels.reset_index(drop=True).to_csv("imdb_vowel_names_df.csv", index=False)
 
 
@@ -185,7 +187,7 @@ def merge_sort(data, columns):
     #NEED TO CODE
     if len(data) <= 1:
         return data
-    mid = #Mid value
+    #mid = #Mid value
     #Need to Code
     #Implement Merge Sort Algorithm
     #return Sorted array
@@ -250,15 +252,24 @@ def sorting_algorithms(file_path, columns, select):
     #NEED TO CODE
     #Read imdb_dataset.csv
     #write code here Inorder to read imdb_dataset
-    df= #read imdb_dataset.csv data set using pandas library
+    df= pd.read_csv(file_path)
 
-    column_vals = #convert the columns strings passed from the test cases in the form of indices according to
+    column_vals = []
+    
+    if 'tconst' in columns:
+        #
+        #
+    else:
+        column_vals[0] = 0
+        
+
+    #column_vals = #convert the columns strings passed from the test cases in the form of indices according to
                   #the imdb_dataset indices for example tconst column is in the index 0. Apart from the testcase
                   #Columns provided you must also include 0 column in the first place of list in column_vals
                   #for example if you have provided with columns {'startYear', 'primaryTitle'} which are in the
                   #indices {3,1}. So the column_vals should look like [0,3,1].
 
-    data = #convert the dataframes into list of sublists, each sublist consists of values corresponds to
+    #data = #convert the dataframes into list of sublists, each sublist consists of values corresponds to
            #the particular columns which are passed from the test cases. In addition to these columns, each
            #sublist should consist of tconst values which are used to identify each column uniquely.
            #At the end of sorting all the rows in the dataset by using any algorithm you need to
@@ -274,6 +285,7 @@ def sorting_algorithms(file_path, columns, select):
 #############################################################################################################
 # Donot Modify Below Code
 #############################################################################################################
+'''
     if(select==1):
         start_time = time.time()
         output_list = insertion_sort(data, column_vals)
@@ -310,3 +322,4 @@ def sorting_algorithms(file_path, columns, select):
         end_time = time.time()
         time_in_seconds = end_time - start_time
         return [time_in_seconds, list(map(lambda x: x[0], output_list))]
+'''
