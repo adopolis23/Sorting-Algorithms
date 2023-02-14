@@ -204,6 +204,13 @@ def insertion_sort(arr, columns):
     # columns: store the column indices from the dataframe.
     Finally, returns the final sorted 2D array.
     """
+    print("sorting by: ")
+    print(columns)
+
+    for i in range(len(arr)):
+        minVal = columns[1]
+        
+
     #NEED TO CODE
     #Insertion Sort Implementation
     #Return : List of tconst values which are obtained after sorting the dataset.
