@@ -211,6 +211,11 @@ def insertion_sort(arr, columns):
     #Output Returning array should look like [['tconst','col1','col2'], ['tconst','col1','col2'], ['tconst','col1','col2'],.....]
     #column values in sublist must be according to the columns passed from the testcases.
 
+
+
+
+
+
 #############################################################################################################
 # Sorting Algorithms Function Calls
 #############################################################################################################
@@ -250,25 +255,29 @@ def sorting_algorithms(file_path, columns, select):
                                     # Represents one record or row from the imdb_dataset.csv (sublist of values).
     """
     #NEED TO CODE
+
+    #done
     #Read imdb_dataset.csv
     #write code here Inorder to read imdb_dataset
     df= pd.read_csv(file_path)
 
     column_vals = []
     
-    if 'tconst' in columns:
-        #
-        #
-    else:
-        column_vals[0] = 0
-        
+    #if 'tconst' in columns:
+    column_vals.append(0)
 
+    for name in columns:
+        for i in range(len(df.columns)):
+            if name == df.columns[i]:
+                column_vals.append(i)
+    
+    #done
     #column_vals = #convert the columns strings passed from the test cases in the form of indices according to
                   #the imdb_dataset indices for example tconst column is in the index 0. Apart from the testcase
                   #Columns provided you must also include 0 column in the first place of list in column_vals
                   #for example if you have provided with columns {'startYear', 'primaryTitle'} which are in the
                   #indices {3,1}. So the column_vals should look like [0,3,1].
-
+    #done
     #data = #convert the dataframes into list of sublists, each sublist consists of values corresponds to
            #the particular columns which are passed from the test cases. In addition to these columns, each
            #sublist should consist of tconst values which are used to identify each column uniquely.
@@ -281,17 +290,27 @@ def sorting_algorithms(file_path, columns, select):
                                     # the other provided column values with respect to columns from the provided
                                     # test cases must be after the tconst value in every sublist. Every sublist
                                     # Represents one record or row from the imdb_dataset.csv (sublist of values).
+    data = []
+
+    for index, row in df.iterrows():
+        temp = []
+        for col_name in df.columns:
+            temp.append(row[col_name])
+        data.append(temp)
+
+        
 
 #############################################################################################################
 # Donot Modify Below Code
 #############################################################################################################
-'''
+
     if(select==1):
         start_time = time.time()
         output_list = insertion_sort(data, column_vals)
         end_time = time.time()
         time_in_seconds = end_time - start_time
         return [time_in_seconds, list(map(lambda x: x[0], output_list))]
+    '''
     if(select==2):
         start_time = time.time()
         output_list = selection_sort(data, column_vals)

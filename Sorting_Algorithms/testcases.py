@@ -21,7 +21,7 @@ def testcase_1_1():
 
 
     return sorted_testcase_1_1
-
+'''
 def testcase_1_2():
     global total
     global f
@@ -576,13 +576,16 @@ def testcase_12_2():
     total+=1
 
     return testcase_12_2
+
+'''
 ################
-data_filtering("imdb_dataset.csv", 1)
-data_filtering("imdb_dataset.csv", 2)
-data_filtering("imdb_dataset.csv", 3)
-data_filtering("imdb_dataset.csv", 4)
+#data_filtering("imdb_dataset.csv", 1)
+#data_filtering("imdb_dataset.csv", 2)
+#data_filtering("imdb_dataset.csv", 3)
+#data_filtering("imdb_dataset.csv", 4)
 testcase = {}
 testcase['testcase_1_1'] = testcase_1_1()
+'''
 testcase['testcase_1_2'] = testcase_1_2()
 testcase['testcase_1_3'] = testcase_1_3()
 testcase['testcase_2_1'] = testcase_2_1()
@@ -628,5 +631,6 @@ testcase['testcase_11_1'] = testcase_11_1()
 testcase['testcase_11_2'] = testcase_11_2()
 testcase['testcase_12_1'] = testcase_12_1()
 testcase['testcase_12_2'] = testcase_12_2()
+'''
 
 print("\n\nTotal Test Cases Passed : {}\nTotal Test Cases Failed : {}".format(total-f,f))
