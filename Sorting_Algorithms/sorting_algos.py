@@ -204,12 +204,23 @@ def insertion_sort(arr, columns):
     # columns: store the column indices from the dataframe.
     Finally, returns the final sorted 2D array.
     """
-    print("sorting by: ")
-    print(columns)
 
-    for i in range(len(arr)):
-        minVal = columns[1]
+    index = columns[1]
+
+    #for each element in array
+    for i in range(len(arr)-1):
         
+        #min starts at that element
+        minIndex = i
+
+        #go through all of the rest of the elements
+        for j in range(i+1, len(arr)):
+
+            #if their val is lower then the minIndex is updated
+            if arr[j][index] < arr[minIndex][index]:
+                minIndex = j
+
+
 
     #NEED TO CODE
     #Insertion Sort Implementation
