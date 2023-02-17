@@ -204,28 +204,30 @@ def insertion_sort(arr, columns):
     # columns: store the column indices from the dataframe.
     Finally, returns the final sorted 2D array.
     """
+    b = list(arr)
 
-    index = columns[1]
+    index = columns[1] # index = 3
 
     #for each element in array
-    for i in range(len(arr)-1):
+    for i in range(1, len(arr)):
         
+
         #min starts at that element
-        minIndex = i
+        minIndex = b[i]
 
+        j = i-1
         #go through all of the rest of the elements
-        for j in range(i+1, len(arr)):
+        while j >= 0 and int(minIndex[index]) < int(b[j][index]):
+            b[j+1] = b[j]
+            j -= 1
 
-            #if their val is lower then the minIndex is updated
-            if arr[j][index] < arr[minIndex][index]:
-                minIndex = j
-
-
-
+        b[j+1] = minIndex
+    
     #NEED TO CODE
     #Insertion Sort Implementation
     #Return : List of tconst values which are obtained after sorting the dataset.
-    return arr
+    print(b[1])
+    return b
     #Output Returning array should look like [['tconst','col1','col2'], ['tconst','col1','col2'], ['tconst','col1','col2'],.....]
     #column values in sublist must be according to the columns passed from the testcases.
 
