@@ -98,6 +98,23 @@ def selection_sort(arr, columns):
     #NEED TO CODE
     #Implement Selection Sort Algorithm
     #return Sorted array
+
+    index = columns[1]
+
+    for i in range(len(arr)):
+        minIndex = i
+
+        for j in range(i+1, len(arr)):
+            if arr[j][index] < arr[minIndex][index]:
+                minIndex = j
+        
+        #if another element is the minimum then swap the elements
+        if i != minIndex:
+            tmp = arr[minIndex]
+            arr[minIndex] = arr[i]
+            arr[i] = tmp
+
+
     return arr
     #Output Returning array should look like [['tconst','col1','col2'], ['tconst','col1','col2'], ['tconst','col1','col2'],.....]
     #column values in sublist must be according to the columns passed from the testcases.
@@ -217,7 +234,7 @@ def insertion_sort(arr, columns):
 
         j = i-1
         #go through all of the rest of the elements
-        while j >= 0 and int(minIndex[index]) < int(b[j][index]):
+        while j >= 0 and minIndex[index] < b[j][index]:
             b[j+1] = b[j]
             j -= 1
 
@@ -225,8 +242,7 @@ def insertion_sort(arr, columns):
     
     #NEED TO CODE
     #Insertion Sort Implementation
-    #Return : List of tconst values which are obtained after sorting the dataset.
-    print(b[1])
+    #Return : List of tconst values which are obtained after sorting the dataset
     return b
     #Output Returning array should look like [['tconst','col1','col2'], ['tconst','col1','col2'], ['tconst','col1','col2'],.....]
     #column values in sublist must be according to the columns passed from the testcases.
@@ -330,7 +346,7 @@ def sorting_algorithms(file_path, columns, select):
         end_time = time.time()
         time_in_seconds = end_time - start_time
         return [time_in_seconds, list(map(lambda x: x[0], output_list))]
-    '''
+    
     if(select==2):
         start_time = time.time()
         output_list = selection_sort(data, column_vals)
@@ -361,4 +377,3 @@ def sorting_algorithms(file_path, columns, select):
         end_time = time.time()
         time_in_seconds = end_time - start_time
         return [time_in_seconds, list(map(lambda x: x[0], output_list))]
-'''

@@ -25,7 +25,7 @@ def testcase_1_1():
 
 
     return sorted_testcase_1_1
-'''
+
 def testcase_1_2():
     global total
     global f
@@ -38,6 +38,8 @@ def testcase_1_2():
     total+=1
 
     return sorted_testcase_1_2
+
+
 
 def testcase_1_3():
     global total
@@ -52,6 +54,8 @@ def testcase_1_3():
 
     return sorted_testcase_1_3
 
+
+
 def testcase_2_1():
     global total
     global f
@@ -64,6 +68,7 @@ def testcase_2_1():
     total+=1
 
     return sorted_testcase_2_1
+
 
 
 def testcase_2_2():
@@ -581,7 +586,7 @@ def testcase_12_2():
 
     return testcase_12_2
 
-'''
+
 ################
 #data_filtering("imdb_dataset.csv", 1)
 #data_filtering("imdb_dataset.csv", 2)
@@ -589,12 +594,14 @@ def testcase_12_2():
 #data_filtering("imdb_dataset.csv", 4)
 testcase = {}
 testcase['testcase_1_1'] = testcase_1_1()
-'''
 testcase['testcase_1_2'] = testcase_1_2()
 testcase['testcase_1_3'] = testcase_1_3()
 testcase['testcase_2_1'] = testcase_2_1()
 testcase['testcase_2_2'] = testcase_2_2()
 testcase['testcase_2_3'] = testcase_2_3()
+
+'''
+
 testcase['testcase_3_1'] = testcase_3_1()
 testcase['testcase_3_2'] = testcase_3_2()
 testcase['testcase_3_3'] = testcase_3_3()
