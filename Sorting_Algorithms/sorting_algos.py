@@ -2,6 +2,7 @@ import csv
 import time
 import json
 
+import math
 import pandas as pd
 
 """
@@ -58,9 +59,28 @@ def data_filtering(filelocation, num):
 #############################################################################################################
 #Quick Sort
 #############################################################################################################
-def pivot_element(arr):
+def pivot_element(arr, index):
     #CODE For identifiying the pivot element
-    return pivot
+
+    #Selects the middle element of the array as the pivot
+    pivot = arr[len(arr)-1][index]
+
+    i = -1
+
+    for j in range(len(arr)-1):
+        if arr[j][index] <= pivot:
+            i = i + 1
+            tmp = arr[i]
+            arr[i] = arr[j]
+            arr[j] = tmp
+
+
+    tmp = arr[i+1]
+    arr[i+1] = arr[len(arr)-1]
+    arr[len(arr)-1] = tmp
+
+    return i + 1
+
 def quicksort(arr, columns):
     """
     The function performs the QuickSort algorithm on a 2D array (list of lists), where
@@ -76,12 +96,19 @@ def quicksort(arr, columns):
     Finally, the function calls itself recursively on the left and right sub-arrays, concatenates
     the result of the recursive calls with the middle sub-array, and returns the final sorted 2D array.
     """
+    index = columns[1]
+
     if len(arr) <= 1:
         return arr
-    pivot = pivot_element(arr)
+    pivot = pivot_element(arr, index)
     #NEED TO CODE
     #Implement Quick Sort Algorithm
     #return Sorted array
+
+    quicksort(arr[:pivot], columns)
+    quicksort(arr[pivot+1:], columns)
+
+
     return arr
     #Output Returning array should look like [['tconst','col1','col2'], ['tconst','col1','col2'], ['tconst','col1','col2'],.....]
     #column values in sublist must be according to the columns passed from the testcases.

@@ -1,6 +1,7 @@
 from sorting_algos import sorting_algorithms
 from sorting_algos import data_filtering
 import json
+import sys
 
 total=0
 f=0
@@ -593,6 +594,10 @@ def testcase_12_2():
 #data_filtering("imdb_dataset.csv", 3)
 #data_filtering("imdb_dataset.csv", 4)
 testcase = {}
+
+
+
+'''
 testcase['testcase_1_1'] = testcase_1_1()
 testcase['testcase_1_2'] = testcase_1_2()
 testcase['testcase_1_3'] = testcase_1_3()
@@ -601,10 +606,13 @@ testcase['testcase_2_2'] = testcase_2_2()
 testcase['testcase_2_3'] = testcase_2_3()
 
 '''
-
 testcase['testcase_3_1'] = testcase_3_1()
 testcase['testcase_3_2'] = testcase_3_2()
 testcase['testcase_3_3'] = testcase_3_3()
+
+
+'''
+
 testcase['testcase_4_1'] = testcase_4_1()
 testcase['testcase_4_2'] = testcase_4_2()
 testcase['testcase_4_3'] = testcase_4_3()
