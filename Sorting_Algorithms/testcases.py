@@ -606,16 +606,19 @@ testcase['testcase_2_2'] = testcase_2_2()
 testcase['testcase_2_3'] = testcase_2_3()
 
 '''
-testcase['testcase_3_1'] = testcase_3_1()
-testcase['testcase_3_2'] = testcase_3_2()
-testcase['testcase_3_3'] = testcase_3_3()
+#code done but not working
+#testcase['testcase_3_1'] = testcase_3_1()
+#testcase['testcase_3_2'] = testcase_3_2()
+#testcase['testcase_3_3'] = testcase_3_3()
 
 
-'''
+
 
 testcase['testcase_4_1'] = testcase_4_1()
 testcase['testcase_4_2'] = testcase_4_2()
 testcase['testcase_4_3'] = testcase_4_3()
+
+'''
 testcase['testcase_5_1'] = testcase_5_1()
 testcase['testcase_5_2'] = testcase_5_2()
 testcase['testcase_5_3'] = testcase_5_3()

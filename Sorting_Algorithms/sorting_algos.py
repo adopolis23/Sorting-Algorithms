@@ -63,23 +63,23 @@ def pivot_element(arr, index):
     #CODE For identifiying the pivot element
 
     #Selects the middle element of the array as the pivot
-    pivot = arr[len(arr)-1][index]
+    pivot = 0
 
-    i = -1
+    for i in range(pivot+1, len(arr)):
+        
+        if arr[i][index] <= arr[0][index]:
+            pivot = pivot + 1
 
-    for j in range(len(arr)-1):
-        if arr[j][index] <= pivot:
-            i = i + 1
             tmp = arr[i]
-            arr[i] = arr[j]
-            arr[j] = tmp
+            arr[pivot] = arr[i]
+            arr[i] = tmp
+    
+    tmp = arr[0]
+    arr[pivot] = arr[0]
+    arr[0] = tmp
 
+    return pivot
 
-    tmp = arr[i+1]
-    arr[i+1] = arr[len(arr)-1]
-    arr[len(arr)-1] = tmp
-
-    return i + 1
 
 def quicksort(arr, columns):
     """
@@ -161,6 +161,29 @@ def max_heapify(arr, n, i, columns):
     and an index i in the array, and ensures that the subtree rooted at
     index i is a max heap.
     """
+    #max value is the node being proccessed
+    maxVal = i
+
+    #find index of left and right child
+    leftChild = i*2 + 1
+    rightChild = i*2 + 2
+
+    #if left child exists and is greater than the current max then max is now left child
+    if leftChild < n and arr[leftChild][columns[1]] > arr[maxVal][columns[1]]:
+        maxVal = leftChild
+
+    #if right child exists and is greater than the current max then max is now right child
+    if rightChild < n and arr[rightChild][columns[1]] > arr[maxVal][columns[1]]:
+        maxVal = rightChild
+
+    #maxVal is now the max value of the node to be processed and its children
+
+    #if the largest value is not the node being processed then swap them
+    if maxVal != i:
+        arr[i], arr[maxVal] = arr[maxVal], arr[i]
+
+        #now that we have swapped we need to call heapify again on the old place of largest
+        max_heapify(arr, n, maxVal, columns)
 
 
 def build_max_heap(arr, n, i, columns):
@@ -176,6 +199,9 @@ def build_max_heap(arr, n, i, columns):
     #NEED TO CODE
     #Implement heapify algorithm here
 
+    for j in range(n//2 -1, -1, -1):
+        max_heapify(arr, n, j, columns)
+
 def heap_sort(arr, columns):
     """
     # arr: list of sublists which consists of records from the dataset in every sublists.
@@ -185,6 +211,13 @@ def heap_sort(arr, columns):
     #NEED TO CODE
     #Implement Heap Sort Algorithm
     #return Sorted array
+
+    build_max_heap(arr, len(arr), 0, columns)
+
+    for i in range(len(arr)-1, 0, -1):
+        arr[i], arr[0] = arr[0], arr[i]
+        max_heapify(arr, i, 0, columns)
+
     return arr
     #Output Returning array should look like [['tconst','col1','col2'], ['tconst','col1','col2'], ['tconst','col1','col2'],.....]
     #column values in sublist must be according to the columns passed from the testcases.
