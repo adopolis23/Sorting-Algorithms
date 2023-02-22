@@ -234,6 +234,36 @@ def shell_sort(arr, columns):
     #NEED TO CODE
     #Implement Shell Sort Algorithm
     #return Sorted array
+    index = columns[1]
+
+    #chose a starting gap in this case we will use len of array / 2
+    gap = len(arr) // 2
+
+    while gap > 0:
+
+        #for each element from the gap to the end of array
+        for i in range(gap, len(arr)):
+
+            #compare to element one gap to the left
+            if arr[i][index] < arr[i-gap][index]:
+                #if in incorrect place in array swap them
+                arr[i], arr[i-gap] = arr[i-gap], arr[i]
+
+                
+                #then must go to eleemnt swapped and compare with elemenet onbe gap to left of it
+                j = i - gap
+                while j-gap >= 0:
+
+                    #swap if in incorrect place
+                    if arr[j][index] < arr[j-gap][index]:
+                        arr[j], arr[j-gap] = arr[j-gap], arr[j]
+                    j = j - gap
+        
+        #once we have checked all elements reduce gap by 2
+        gap = gap // 2
+
+
+
     return arr
     #Output Returning array should look like [['tconst','col1','col2'], ['tconst','col1','col2'], ['tconst','col1','col2'],.....]
     #column values in sublist must be according to the columns passed from the testcases.
