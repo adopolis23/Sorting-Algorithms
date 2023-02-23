@@ -284,6 +284,34 @@ def merge(left, right, columns):
     #NEED TO CODE
     #Implement merge Logic
     #return Sorted array
+    index = columns[1]
+    sol = []
+
+    while len(left)>0 and len(right)>0:
+        if left[0][index] <= right[0][index]:
+            x = left[0]
+            left = left[1:]
+            sol.append(x)
+        else:
+            x = right[0]
+            right = right[1:]
+            sol.append(x)
+
+    while len(left)>0:
+        x = left[0]
+        left = left[1:]
+        sol.append(x)
+
+    while len(right)>0:
+        x = right[0]
+        right = right[1:]
+        sol.append(x)
+    
+    return sol
+
+
+
+
 
 def merge_sort(data, columns):
     """
@@ -297,8 +325,17 @@ def merge_sort(data, columns):
     #mid = #Mid value
     #Need to Code
     #Implement Merge Sort Algorithm
+
+    mid = len(data) // 2
+
+    l = data[:mid]
+    r = data[mid:]
+
+    l = merge_sort(l, columns)
+    r = merge_sort(r, columns)
+
     #return Sorted array
-    return merge(left, right, columns)
+    return merge(l, r, columns)
     #Output Returning array should look like [['tconst','col1','col2'], ['tconst','col1','col2'], ['tconst','col1','col2'],.....]
     #column values in sublist must be according to the columns passed from the testcases.
 
