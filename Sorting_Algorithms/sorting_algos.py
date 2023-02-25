@@ -31,28 +31,43 @@ def data_filtering(filelocation, num):
          if num == 4 -> filter data based on primary Names which start with vowel character.
 
     """
-    #df = # Load the imdb_dataset.csv dataset
+    df= pd.read_csv(filelocation)
+
     if(num==1):
         #NEED TO CODE
         #Implement your logic here for Filtering data based on years (years in range 1941 to 1955)
         #df_year = #Store your filtered dataframe here
+        #print(df.head)
+
+        #test = df["genres"]
+        #print(test.head)
+
+        df_year = df[(df["startYear"] >= 1941) & (df["startYear"] <= 1955)]
         df_year.reset_index(drop=True).to_csv("imdb_years_df.csv", index=False)
 
     if(num==2):
         #NEED TO CODE
         #Implement your logic here for Filtering data based on genres (genres are either ‘Adventure’ or ‘Drama’)
         #df_genres = #Store your filtered dataframe here
+        df_genres = df[(df["genres"] == "Adventure") | (df["genres"] == "Drama")]
         df_genres.reset_index(drop=True).to_csv("imdb_genres_df.csv", index=False)
     if(num==3):
         #NEED TO CODE
         #Implement your logic here for Filtering data based on primaryProfession (if primaryProfession column contains
         #substrings {‘assistant_director’, ‘casting_director’, ‘art_director’, ‘cinematographer’} )
         #df_professions = #Store your filtered dataframe here
+        
+        df_professions = df[df["primaryProfession"].str.contains("assistant_director") | df["primaryProfession"].str.contains("casting_director") | df["primaryProfession"].str.contains("art_director") | df["primaryProfession"].str.contains("cinematographer")]
+
         df_professions.reset_index(drop=True).to_csv("imdb_professions_df.csv", index=False)
     if(num==4):
         #NEED TO CODE
         #Implement your logic here for Filtering data based on primary Names which start with vowel character.
         #df_vowels = #Store your filtered dataframe here
+
+        df_vowels = df[(df["primaryName"].str[0] == 'A') | (df["primaryName"].str[0] == 'E') | (df["primaryName"].str[0] == 'I') | (df["primaryName"].str[0] == 'O') | (df["primaryName"].str[0] == 'U')]
+
+        print(df_vowels.head)
         df_vowels.reset_index(drop=True).to_csv("imdb_vowel_names_df.csv", index=False)
 
 
