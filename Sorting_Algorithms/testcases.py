@@ -913,36 +913,32 @@ testcase = {}
 #testcase['testcase_6_3'] = testcase_6_3()
 
 
-#passed
+#all passed except 7_3
 #testcase['testcase_7_1'] = testcase_7_1()
-
-#passed
 #testcase['testcase_7_2'] = testcase_7_2()
-
-#max recursion depth
 #testcase['testcase_7_3'] = testcase_7_3()
+#testcase['testcase_7_4'] = testcase_7_4()
+#testcase['testcase_7_5'] = testcase_7_5()
+#testcase['testcase_7_6'] = testcase_7_6()
+
+#all passed except for 8_3
+#testcase['testcase_8_1'] = testcase_8_1()
+#testcase['testcase_8_2'] = testcase_8_2()
+#testcase['testcase_8_3'] = testcase_8_3()
+#testcase['testcase_8_4'] = testcase_8_4()
+#testcase['testcase_8_5'] = testcase_8_5()
+#testcase['testcase_8_6'] = testcase_8_6()
 
 
-testcase['testcase_7_4'] = testcase_7_4()
-
-'''
-testcase['testcase_7_5'] = testcase_7_5()
-testcase['testcase_7_6'] = testcase_7_6()
-testcase['testcase_8_1'] = testcase_8_1()
-testcase['testcase_8_2'] = testcase_8_2()
-testcase['testcase_8_3'] = testcase_8_3()
-testcase['testcase_8_4'] = testcase_8_4()
-testcase['testcase_8_5'] = testcase_8_5()
-testcase['testcase_8_6'] = testcase_8_6()
 testcase['testcase_9_1'] = testcase_9_1()
 testcase['testcase_9_2'] = testcase_9_2()
-testcase['testcase_9_3'] = testcase_9_3()
+#testcase['testcase_9_3'] = testcase_9_3()
 testcase['testcase_9_4'] = testcase_9_4()
 testcase['testcase_9_5'] = testcase_9_5()
 testcase['testcase_9_6'] = testcase_9_6()
 testcase['testcase_10_1'] = testcase_10_1()
 testcase['testcase_10_2'] = testcase_10_2()
-testcase['testcase_10_3'] = testcase_10_3()
+#testcase['testcase_10_3'] = testcase_10_3()
 testcase['testcase_10_4'] = testcase_10_4()
 testcase['testcase_10_5'] = testcase_10_5()
 testcase['testcase_10_6'] = testcase_10_6()
@@ -951,6 +947,6 @@ testcase['testcase_11_2'] = testcase_11_2()
 testcase['testcase_12_1'] = testcase_12_1()
 testcase['testcase_12_2'] = testcase_12_2()
 
-'''
+
 
 print("\n\nTotal Test Cases Passed : {}\nTotal Test Cases Failed : {}".format(total-f,f))

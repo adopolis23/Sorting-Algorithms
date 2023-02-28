@@ -183,12 +183,15 @@ def max_heapify(arr, n, i, columns):
     leftChild = i*2 + 1
     rightChild = i*2 + 2
 
+    #arr[leftChild][columns[1]] > arr[maxVal][columns[1]]
+    #arr[rightChild][columns[1]] > arr[maxVal][columns[1]]
+
     #if left child exists and is greater than the current max then max is now left child
-    if leftChild < n and arr[leftChild][columns[1]] > arr[maxVal][columns[1]]:
+    if leftChild < n and compGreaterThan(arr[leftChild], arr[maxVal], columns):
         maxVal = leftChild
 
     #if right child exists and is greater than the current max then max is now right child
-    if rightChild < n and arr[rightChild][columns[1]] > arr[maxVal][columns[1]]:
+    if rightChild < n and compGreaterThan(arr[rightChild], arr[maxVal], columns):
         maxVal = rightChild
 
     #maxVal is now the max value of the node to be processed and its children
@@ -259,8 +262,10 @@ def shell_sort(arr, columns):
         #for each element from the gap to the end of array
         for i in range(gap, len(arr)):
 
+            #arr[i][index] < arr[i-gap][index]
+
             #compare to element one gap to the left
-            if arr[i][index] < arr[i-gap][index]:
+            if compLessThan(arr[i], arr[i-gap], columns):
                 #if in incorrect place in array swap them
                 arr[i], arr[i-gap] = arr[i-gap], arr[i]
 
@@ -270,7 +275,7 @@ def shell_sort(arr, columns):
                 while j-gap >= 0:
 
                     #swap if in incorrect place
-                    if arr[j][index] < arr[j-gap][index]:
+                    if compLessThan(arr[j], arr[j-gap], columns):
                         arr[j], arr[j-gap] = arr[j-gap], arr[j]
                     j = j - gap
         
@@ -303,7 +308,8 @@ def merge(left, right, columns):
     sol = []
 
     while len(left)>0 and len(right)>0:
-        if left[0][index] <= right[0][index]:
+        #left[0][index] <= right[0][index]
+        if not compGreaterThan(left[0], right[0], columns):
             x = left[0]
             left = left[1:]
             sol.append(x)
@@ -397,11 +403,12 @@ def compLessThan(item1, item2, columns):
     compare = 1
     index = columns[compare]
 
-    while item1[index] == item2[index] and compare < len(columns)-1:
+
+    while parse(item1[index], index) == parse(item2[index], index) and compare < len(columns)-1:
         compare = compare + 1
         index = columns[compare]
-    
-    if item1[index] < item2[index]:
+
+    if parse(item1[index], index) < parse(item2[index], index):
         return True
     else:
         return False
@@ -418,6 +425,16 @@ def compGreaterThan(item1, item2, columns):
         return True
     else:
         return False
+    
+def parse(x, index):
+    if isinstance(x, str):
+        if x.isdigit() and index != 1:
+            return int(x)
+        else:
+            return x
+    
+    else:
+        return x
 
 
 #############################################################################################################
