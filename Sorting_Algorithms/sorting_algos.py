@@ -147,7 +147,7 @@ def selection_sort(arr, columns):
         minIndex = i
 
         for j in range(i+1, len(arr)):
-            if arr[j][index] < arr[minIndex][index]:
+            if compLessThan(arr[j], arr[minIndex], columns):
                 minIndex = j
         
         #if another element is the minimum then swap the elements
@@ -371,12 +371,14 @@ def insertion_sort(arr, columns):
     for i in range(1, len(arr)):
         
 
+        
+        j = i-1
         #min starts at that element
         minIndex = b[i]
 
-        j = i-1
+
         #go through all of the rest of the elements
-        while j >= 0 and minIndex[index] < b[j][index]:
+        while j >= 0 and compLessThan(minIndex, b[j], columns):
             b[j+1] = b[j]
             j -= 1
 
@@ -391,7 +393,31 @@ def insertion_sort(arr, columns):
 
 
 
+def compLessThan(item1, item2, columns):
+    compare = 1
+    index = columns[compare]
 
+    while item1[index] == item2[index] and compare < len(columns)-1:
+        compare = compare + 1
+        index = columns[compare]
+    
+    if item1[index] < item2[index]:
+        return True
+    else:
+        return False
+
+def compGreaterThan(item1, item2, columns):
+    compare = 1
+    index = columns[compare]
+
+    while item1[index] == item2[index] and compare < len(columns)-1:
+        compare = compare + 1
+        index = columns[compare]
+    
+    if item1[index] > item2[index]:
+        return True
+    else:
+        return False
 
 
 #############################################################################################################
