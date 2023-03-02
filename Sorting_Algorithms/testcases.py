@@ -902,8 +902,8 @@ testcase = {}
 #testcase['testcase_4_2'] = testcase_4_2()
 #testcase['testcase_4_3'] = testcase_4_3()
 
-#5_2 Passed 5_2 passed 5_3 FAILED
-#testcase['testcase_5_1'] = testcase_5_1()
+#5_1 Passed 5_2 passed 5_3 FAILED
+testcase['testcase_5_1'] = testcase_5_1()
 #testcase['testcase_5_2'] = testcase_5_2()
 #testcase['testcase_5_3'] = testcase_5_3()
 
@@ -929,7 +929,7 @@ testcase = {}
 #testcase['testcase_8_5'] = testcase_8_5()
 #testcase['testcase_8_6'] = testcase_8_6()
 
-
+'''
 testcase['testcase_9_1'] = testcase_9_1()
 testcase['testcase_9_2'] = testcase_9_2()
 #testcase['testcase_9_3'] = testcase_9_3()
@@ -946,7 +946,42 @@ testcase['testcase_11_1'] = testcase_11_1()
 testcase['testcase_11_2'] = testcase_11_2()
 testcase['testcase_12_1'] = testcase_12_1()
 testcase['testcase_12_2'] = testcase_12_2()
-
+'''
 
 
 print("\n\nTotal Test Cases Passed : {}\nTotal Test Cases Failed : {}".format(total-f,f))
+
+
+'''
+def pivot_elem(arr):
+    
+    pivot = len(arr)//2
+    print(arr)
+    arr[pivot], arr[len(arr)-1] = arr[len(arr)-1], arr[pivot]
+    print(arr)
+    
+    positionToPlace = 0
+    
+    for i in range(positionToPlace+1, len(arr)-1):
+        if arr[i] < arr[len(arr)-1]:
+            arr[i], arr[positionToPlace] = arr[positionToPlace], arr[i]
+            positionToPlace = positionToPlace + 1
+    
+    arr[len(arr)-1], arr[positionToPlace] = arr[positionToPlace], arr[len(arr)-1]
+    
+    return positionToPlace
+
+
+    def quicksort(arr):
+
+    if len(arr) <= 1:
+        return arr
+    pivot = pivot_elem(arr)
+
+    quicksort(arr[:pivot])
+    quicksort(arr[pivot+1:])
+
+
+    return arr
+
+'''

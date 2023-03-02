@@ -399,6 +399,20 @@ def insertion_sort(arr, columns):
 
 
 
+def compLessThanNP(item1, item2, columns):
+    compare = 1
+    index = columns[compare]
+
+
+    while item1[index] == item2[index] and compare < len(columns)-1:
+        compare = compare + 1
+        index = columns[compare]
+
+    if item1[index] < item2[index]:
+        return True
+    else:
+        return False
+
 def compLessThan(item1, item2, columns):
     compare = 1
     index = columns[compare]
