@@ -24,6 +24,87 @@ class FixedSizeList(list):
             raise Exception("Cannot add item. List is full.")
         else:
             super().append(item)
+###################
+
+
+#code for comparasins and parsing
+def compLessThan(item1, item2, columns):
+    compare = 1
+    index = columns[compare]
+
+
+    while parse(item1[index], index) == parse(item2[index], index) and compare < len(columns)-1:
+        compare = compare + 1
+        index = columns[compare]
+
+    if parse(item1[index], index) < parse(item2[index], index):
+        return True
+    else:
+        return False
+
+def compGreaterThan(item1, item2, columns):
+    compare = 1
+    index = columns[compare]
+
+    while item1[index] == item2[index] and compare < len(columns)-1:
+        compare = compare + 1
+        index = columns[compare]
+    
+    if item1[index] > item2[index]:
+        return True
+    else:
+        return False
+    
+def parse(x, index):
+    if isinstance(x, str):
+        if x.isdigit() and index != 1:
+            return int(x)
+        else:
+            return x
+    
+    else:
+        return x
+#########
+
+
+#merge sort code
+def merge(left, right):
+    sol = []
+    
+    while len(left) != 0 and len(right) != 0:
+        if not compGreaterThan(left[0], right[0]):
+            x = left[0]
+            left = left[1:]
+            sol.append(x)
+        else:
+            x = right[0]
+            right = right[1:]
+            sol.append(x)
+    
+    while len(left) > 0:
+        x = left[0]
+        left = left[1:]
+        sol.append(x)
+    
+    while len(right) > 0:
+        x = right[0]
+        right = right[1:]
+        sol.append(x)
+    
+    return sol
+
+def mergeSort(arr):
+    if len(arr) <= 1:
+        return arr
+    
+    mid = len(arr)//2
+    left = arr[:mid]
+    right = arr[mid:]
+    
+    left = mergeSort(left)
+    right = mergeSort(right)
+    
+    return merge(left, right)
 
 ####################################################################################
 # Mystery_Function
@@ -82,13 +163,20 @@ def data_chuncks(file_path, columns, memory_limitation):
         """
         #Load the 2000 chunck of data every time into Data Structure called List of Sublists which is named as "chuncks_2000"
         chuncks_2000=FixedSizeList(2000)
+        file_index = 1
+
+        for block in pd.read_csv(file_path, chunksize=memory_limitation):
+            
+            #block.reset_index(drop=True).to_csv("Individual/Sorted_"+str(file_index)+".csv", index=False)
+            #file_index = file_index + 1
+            
 
         #Write code for Extracting only 2000 records at a time from imdb_dataset.csv
 
         #Passing the 2000 Extracted Records and Columns indices for sorting the data
         #column_indxes are Extracted from the imdb_dataset indices by mapping the columns need to sort on which are
         #passed from the testcases.
-        arr=merge_sort(arr,column_indxes)
+        #arr=merge_sort(arr,column_indxes)
 
 
 #Enable only one Function each from data_chuncks and Mystery_Function at a time
@@ -103,8 +191,12 @@ data_chuncks('imdb_dataset.csv', ['startYear'], 2000)
 #data_chuncks('imdb_dataset.csv', ['startYear','runtimeMinutes' ,'primaryTitle'], 2000)
 
 
+
+
+
+
 #Test Case 13
-Mystery_Function("Individual", 2000, ['tconst', 'startYear','runtimeMinutes' ,'primaryTitle'])
+#Mystery_Function("Individual", 2000, ['tconst', 'startYear','runtimeMinutes' ,'primaryTitle'])
 
 #Test Case 14
 #Mystery_Function(file_path="Individual", 2000, ['primaryTitle'])
