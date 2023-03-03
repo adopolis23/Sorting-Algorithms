@@ -4,6 +4,7 @@ import json
 
 import math
 import pandas as pd
+import sys
 
 """
 Note : For test cases 7-10, you need to extract the required data (filter on conditions mentioned above)
@@ -74,27 +75,27 @@ def data_filtering(filelocation, num):
 #############################################################################################################
 #Quick Sort
 #############################################################################################################
-def pivot_element(arr, index):
-    #CODE For identifiying the pivot element
-
-    #Selects the middle element of the array as the pivot
-    pivot = 0
-
-    for i in range(pivot+1, len(arr)):
-        
-        if arr[i][index] <= arr[0][index]:
-            pivot = pivot + 1
-
-            tmp = arr[i]
-            arr[pivot] = arr[i]
-            arr[i] = tmp
+def pivot_element(arr, low, hi, columns):
+    pivot_index = (hi + low) // 2
+    arr[pivot_index], arr[hi-1] = arr[hi-1], arr[pivot_index]
     
-    tmp = arr[0]
-    arr[pivot] = arr[0]
-    arr[0] = tmp
-
-    return pivot
-
+    place_index = 0
+    
+    for i in range(hi-1):
+        if arr[i][columns[1]] <= arr[hi-1][columns[1]]:
+            arr[place_index], arr[i] = arr[i], arr[place_index]
+            place_index = place_index + 1
+        
+    arr[hi-1], arr[place_index] = arr[place_index], arr[hi-1]
+    
+    return place_index
+    
+    
+def Mega_Quicksort(arr, low, hi, columns):
+    if low < hi:
+        pivot = pivot_element(arr, low, hi, columns)
+        Mega_Quicksort(arr, low, pivot, columns)
+        Mega_Quicksort(arr, pivot+1, hi, columns)
 
 def quicksort(arr, columns):
     """
@@ -111,18 +112,8 @@ def quicksort(arr, columns):
     Finally, the function calls itself recursively on the left and right sub-arrays, concatenates
     the result of the recursive calls with the middle sub-array, and returns the final sorted 2D array.
     """
-    index = columns[1]
-
-    if len(arr) <= 1:
-        return arr
-    pivot = pivot_element(arr, index)
-    #NEED TO CODE
-    #Implement Quick Sort Algorithm
-    #return Sorted array
-
-    quicksort(arr[:pivot], columns)
-    quicksort(arr[pivot+1:], columns)
-
+    sys.setrecursionlimit(10000)
+    Mega_Quicksort(arr, 0, len(arr), columns)
 
     return arr
     #Output Returning array should look like [['tconst','col1','col2'], ['tconst','col1','col2'], ['tconst','col1','col2'],.....]

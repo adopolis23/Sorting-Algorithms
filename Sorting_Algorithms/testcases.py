@@ -893,9 +893,9 @@ testcase = {}
 #testcase['testcase_2_3'] = testcase_2_3()
 
 #max recusion depth
-#testcase['testcase_3_1'] = testcase_3_1()
-#testcase['testcase_3_2'] = testcase_3_2()
-#testcase['testcase_3_3'] = testcase_3_3()
+testcase['testcase_3_1'] = testcase_3_1()
+testcase['testcase_3_2'] = testcase_3_2()
+testcase['testcase_3_3'] = testcase_3_3()
 
 #4_1 Passed 4_2 passed 4_3 failed
 #testcase['testcase_4_1'] = testcase_4_1()
@@ -903,7 +903,7 @@ testcase = {}
 #testcase['testcase_4_3'] = testcase_4_3()
 
 #5_1 Passed 5_2 passed 5_3 FAILED
-testcase['testcase_5_1'] = testcase_5_1()
+#testcase['testcase_5_1'] = testcase_5_1()
 #testcase['testcase_5_2'] = testcase_5_2()
 #testcase['testcase_5_3'] = testcase_5_3()
 
