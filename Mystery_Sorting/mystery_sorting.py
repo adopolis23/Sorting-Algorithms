@@ -4,7 +4,7 @@ import os
 import csv
 import sys
 sys.path.append("../Sorting_Algorithms")
-from sorting_algos import merge_sort
+#from sorting_algos import merge_sort
 
 
 column_names= ['tconst', 'primaryTitle', 'originalTitle', 'startYear',
@@ -100,7 +100,7 @@ def merge(left, right, columns):
     sol = []
     
     while len(left) != 0 and len(right) != 0:
-        if not compGreaterThan(left[0], right[0], columns):
+        if compLessThan(left[0], right[0], columns):
             x = left[0]
             left = left[1:]
             sol.append(x)
@@ -208,11 +208,13 @@ def data_chuncks(file_path, columns, memory_limitation):
 
             for index, row in block.iterrows():
                 temp = []
+                #temp.append(row[0])
                 for col_name in block.columns:
+                    #if col_name in columns:
                     temp.append(row[col_name])
                 chuncks_2000.append(temp)
             
-            selection_sort(chuncks_2000, column_vals)
+            chuncks_2000 = mergeSort(chuncks_2000, column_vals)
             
             df = pd.DataFrame(chuncks_2000)
 
