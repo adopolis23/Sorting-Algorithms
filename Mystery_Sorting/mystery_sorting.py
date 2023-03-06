@@ -46,11 +46,11 @@ def compGreaterThan(item1, item2, columns):
     compare = 1
     index = columns[compare]
 
-    while item1[index] == item2[index] and compare < len(columns)-1:
+    while parse(item1[index]) == parse(item2[index]) and compare < len(columns)-1:
         compare = compare + 1
         index = columns[compare]
     
-    if item1[index] > item2[index]:
+    if parse(item1[index]) > parse(item2[index]):
         return True
     else:
         return False
@@ -66,13 +66,41 @@ def parse(x, index):
         return x
 #########
 
+#selection sort code
+def selection_sort(arr, columns):
+    """
+    arr: a list of lists representing the 2D array to be sorted
+    columns: a list of integers representing the columns to sort the 2D array on
+    Finally, returns the final sorted 2D array.
+    """
+    #NEED TO CODE
+    #Implement Selection Sort Algorithm
+    #return Sorted array
+
+    index = columns[1]
+
+    for i in range(len(arr)):
+        minIndex = i
+
+        for j in range(i+1, len(arr)):
+            if compLessThan(arr[j], arr[minIndex], columns):
+                minIndex = j
+        
+        #if another element is the minimum then swap the elements
+        if i != minIndex:
+            tmp = arr[minIndex]
+            arr[minIndex] = arr[i]
+            arr[i] = tmp
+
+
+    return arr
 
 #merge sort code
-def merge(left, right):
+def merge(left, right, columns):
     sol = []
     
     while len(left) != 0 and len(right) != 0:
-        if not compGreaterThan(left[0], right[0]):
+        if not compGreaterThan(left[0], right[0], columns):
             x = left[0]
             left = left[1:]
             sol.append(x)
@@ -93,7 +121,7 @@ def merge(left, right):
     
     return sol
 
-def mergeSort(arr):
+def mergeSort(arr, columns):
     if len(arr) <= 1:
         return arr
     
@@ -101,10 +129,10 @@ def mergeSort(arr):
     left = arr[:mid]
     right = arr[mid:]
     
-    left = mergeSort(left)
-    right = mergeSort(right)
+    left = mergeSort(left, columns)
+    right = mergeSort(right, columns)
     
-    return merge(left, right)
+    return merge(left, right, columns)
 
 ####################################################################################
 # Mystery_Function
@@ -161,14 +189,37 @@ def data_chuncks(file_path, columns, memory_limitation):
         memory_limitation. The names of the sorted files are stored as "Individual/Sorted_" followed by a number
         starting from 1.
         """
+        column_names = ["tconst", "primaryTitle", "originalTitle", "startYear", "runtimeMinutes", "genres", "averageRating", "numVotes", "ordering", "category", "seasonNumber", "episodeNumber", "primaryName", "birthYear", "deathYear", "primaryProfession"]
+        column_vals = []
+        column_vals.append(0)
+
+        for name in columns:
+            for i in range(len(column_names)):
+                if name == column_names[i]:
+                    column_vals.append(i)
+
         #Load the 2000 chunck of data every time into Data Structure called List of Sublists which is named as "chuncks_2000"
         chuncks_2000=FixedSizeList(2000)
         file_index = 1
 
+
         for block in pd.read_csv(file_path, chunksize=memory_limitation):
+            #data = []
+
+            for index, row in block.iterrows():
+                temp = []
+                for col_name in block.columns:
+                    temp.append(row[col_name])
+                chuncks_2000.append(temp)
             
-            #block.reset_index(drop=True).to_csv("Individual/Sorted_"+str(file_index)+".csv", index=False)
-            #file_index = file_index + 1
+            selection_sort(chuncks_2000, column_vals)
+            
+            df = pd.DataFrame(chuncks_2000)
+
+            df.reset_index(drop=True).to_csv("Individual/Sorted_"+str(file_index)+".csv", index=False)
+            file_index = file_index + 1
+
+            chuncks_2000.clear()
             
 
         #Write code for Extracting only 2000 records at a time from imdb_dataset.csv
