@@ -1,3 +1,4 @@
+from dataclasses import field
 import pandas as pd
 import math
 import os
@@ -154,11 +155,68 @@ def Mystery_Function(file_path, memory_limitation, columns):
                 #than 2000 records.
     """
 
+    column_names = ["tconst", "primaryTitle", "originalTitle", "startYear", "runtimeMinutes", "genres", "averageRating", "numVotes", "ordering", "category", "seasonNumber", "episodeNumber", "primaryName", "birthYear", "deathYear", "primaryProfession"]
+    column_vals = []
+    column_vals.append(0)
+
+    for name in columns:
+        for i in range(len(column_names)):
+            if name == column_names[i]:
+                column_vals.append(i)
+
     #Need to Code
     #Helps to Sort all the 1,84,265 rows with limitation.
 
     #Load the 2000 chunck of data every time into Data Structure called List of Sublists which is named as "chuncks_2000"
     chuncks_2000=FixedSizeList(2000)
+
+    file_index = 1
+    num_files = 1
+
+    while os.path.isfile("Individual/Sorted_" + str(num_files) + ".csv"):
+        num_files = num_files + 1
+
+    print(str(num_files-1) + " files detected")
+
+    
+    data_remaining = True
+    files_with_data = 0
+
+    #while there are still files with data in them
+    while data_remaining:
+        
+        #minfileindex stores the index of the file with the beginning elem being the smallest
+        min_file_index = 1
+
+        #for every file
+        for i in range(1, num_files):
+
+            #read file into datafram
+            df = pd.read_csv(file_path + "/Sorted_" + str(i) + ".csv")
+            df_top = df.values[:1]
+            
+            
+            
+            '''
+            #convert dataframe to list
+            data = []
+            for index, row in df_top.iterrows():
+                temp = []
+                #temp.append(row[0])
+                for col_name in df_top.columns:
+                    #if col_name in columns:
+                    temp.append(row[col_name])
+                data.append(temp)
+            '''
+
+            break
+            
+        data_remaining = False
+
+    #f = pd.read_csv("Final/test.csv")
+    #if f.empty:
+        #print("empty dataframe")
+
 
 
 ####################################################################################
@@ -218,6 +276,7 @@ def data_chuncks(file_path, columns, memory_limitation):
             
             df = pd.DataFrame(chuncks_2000)
 
+            print("Creating File: Individual/Sorted_" + str(file_index))
             df.reset_index(drop=True).to_csv("Individual/Sorted_"+str(file_index)+".csv", index=False)
             file_index = file_index + 1
 
@@ -235,7 +294,7 @@ def data_chuncks(file_path, columns, memory_limitation):
 #Enable only one Function each from data_chuncks and Mystery_Function at a time
 
 #Test Case 13
-data_chuncks('imdb_dataset.csv', ['startYear'], 2000)
+#data_chuncks('imdb_dataset.csv', ['startYear'], 2000)
 
 #Test Case 14
 #data_chuncks('imdb_dataset.csv', ['primaryTitle'], 2000)
@@ -252,7 +311,7 @@ data_chuncks('imdb_dataset.csv', ['startYear'], 2000)
 #Mystery_Function("Individual", 2000, ['tconst', 'startYear','runtimeMinutes' ,'primaryTitle'])
 
 #Test Case 14
-#Mystery_Function(file_path="Individual", 2000, ['primaryTitle'])
+Mystery_Function("Individual", 2000, ['primaryTitle'])
 
 #Test Case 15
 #Mystery_Function(file_path="Individual", 2000, ['startYear','runtimeMinutes' ,'primaryTitle'])
