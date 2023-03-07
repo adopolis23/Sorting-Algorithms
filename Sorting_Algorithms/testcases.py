@@ -882,63 +882,49 @@ def testcase_12_2():
 ################
 testcase = {}
 
-#testcase 1 passed
-#testcase['testcase_1_1'] = testcase_1_1()
-#testcase['testcase_1_2'] = testcase_1_2()
-#testcase['testcase_1_3'] = testcase_1_3()
-
-#testcase 2 passed
-#testcase['testcase_2_1'] = testcase_2_1()
-#testcase['testcase_2_2'] = testcase_2_2()
-#testcase['testcase_2_3'] = testcase_2_3()
-
-#max recusion depth
+'''
+testcase['testcase_1_1'] = testcase_1_1()
+testcase['testcase_1_2'] = testcase_1_2()
+testcase['testcase_1_3'] = testcase_1_3()
+testcase['testcase_2_1'] = testcase_2_1()
+testcase['testcase_2_2'] = testcase_2_2()
+testcase['testcase_2_3'] = testcase_2_3()
 testcase['testcase_3_1'] = testcase_3_1()
 testcase['testcase_3_2'] = testcase_3_2()
 testcase['testcase_3_3'] = testcase_3_3()
-
-#4_1 Passed 4_2 passed 4_3 failed
-#testcase['testcase_4_1'] = testcase_4_1()
-#testcase['testcase_4_2'] = testcase_4_2()
-#testcase['testcase_4_3'] = testcase_4_3()
-
-#5_1 Passed 5_2 passed 5_3 FAILED
-#testcase['testcase_5_1'] = testcase_5_1()
-#testcase['testcase_5_2'] = testcase_5_2()
-#testcase['testcase_5_3'] = testcase_5_3()
-
-#6_1 passed 6_2 PASSED 6_3 failed
-#testcase['testcase_6_1'] = testcase_6_1()
-#testcase['testcase_6_2'] = testcase_6_2()
-#testcase['testcase_6_3'] = testcase_6_3()
-
-
-#all passed except 7_3
-#testcase['testcase_7_1'] = testcase_7_1()
-#testcase['testcase_7_2'] = testcase_7_2()
-#testcase['testcase_7_3'] = testcase_7_3()
-#testcase['testcase_7_4'] = testcase_7_4()
-#testcase['testcase_7_5'] = testcase_7_5()
-#testcase['testcase_7_6'] = testcase_7_6()
-
-#all passed except for 8_3
-#testcase['testcase_8_1'] = testcase_8_1()
-#testcase['testcase_8_2'] = testcase_8_2()
-#testcase['testcase_8_3'] = testcase_8_3()
-#testcase['testcase_8_4'] = testcase_8_4()
-#testcase['testcase_8_5'] = testcase_8_5()
-#testcase['testcase_8_6'] = testcase_8_6()
-
+testcase['testcase_4_1'] = testcase_4_1()
+testcase['testcase_4_2'] = testcase_4_2()
+testcase['testcase_4_3'] = testcase_4_3()
+testcase['testcase_5_1'] = testcase_5_1()
+testcase['testcase_5_2'] = testcase_5_2()
+testcase['testcase_5_3'] = testcase_5_3()
+testcase['testcase_6_1'] = testcase_6_1()
+testcase['testcase_6_2'] = testcase_6_2()
+testcase['testcase_6_3'] = testcase_6_3()
 '''
+
+#7-1 - 12-1 passed
+testcase['testcase_7_1'] = testcase_7_1()
+testcase['testcase_7_2'] = testcase_7_2()
+testcase['testcase_7_3'] = testcase_7_3()
+testcase['testcase_7_4'] = testcase_7_4()
+testcase['testcase_7_5'] = testcase_7_5()
+testcase['testcase_7_6'] = testcase_7_6()
+testcase['testcase_8_1'] = testcase_8_1()
+testcase['testcase_8_2'] = testcase_8_2()
+testcase['testcase_8_3'] = testcase_8_3()
+testcase['testcase_8_4'] = testcase_8_4()
+testcase['testcase_8_5'] = testcase_8_5()
+testcase['testcase_8_6'] = testcase_8_6()
 testcase['testcase_9_1'] = testcase_9_1()
 testcase['testcase_9_2'] = testcase_9_2()
-#testcase['testcase_9_3'] = testcase_9_3()
+testcase['testcase_9_3'] = testcase_9_3()
 testcase['testcase_9_4'] = testcase_9_4()
 testcase['testcase_9_5'] = testcase_9_5()
 testcase['testcase_9_6'] = testcase_9_6()
 testcase['testcase_10_1'] = testcase_10_1()
 testcase['testcase_10_2'] = testcase_10_2()
-#testcase['testcase_10_3'] = testcase_10_3()
+testcase['testcase_10_3'] = testcase_10_3()
 testcase['testcase_10_4'] = testcase_10_4()
 testcase['testcase_10_5'] = testcase_10_5()
 testcase['testcase_10_6'] = testcase_10_6()
@@ -946,42 +932,6 @@ testcase['testcase_11_1'] = testcase_11_1()
 testcase['testcase_11_2'] = testcase_11_2()
 testcase['testcase_12_1'] = testcase_12_1()
 testcase['testcase_12_2'] = testcase_12_2()
-'''
 
 
 print("\n\nTotal Test Cases Passed : {}\nTotal Test Cases Failed : {}".format(total-f,f))
-
-
-'''
-def pivot_elem(arr):
-    
-    pivot = len(arr)//2
-    print(arr)
-    arr[pivot], arr[len(arr)-1] = arr[len(arr)-1], arr[pivot]
-    print(arr)
-    
-    positionToPlace = 0
-    
-    for i in range(positionToPlace+1, len(arr)-1):
-        if arr[i] < arr[len(arr)-1]:
-            arr[i], arr[positionToPlace] = arr[positionToPlace], arr[i]
-            positionToPlace = positionToPlace + 1
-    
-    arr[len(arr)-1], arr[positionToPlace] = arr[positionToPlace], arr[len(arr)-1]
-    
-    return positionToPlace
-
-
-    def quicksort(arr):
-
-    if len(arr) <= 1:
-        return arr
-    pivot = pivot_elem(arr)
-
-    quicksort(arr[:pivot])
-    quicksort(arr[pivot+1:])
-
-
-    return arr
-
-'''

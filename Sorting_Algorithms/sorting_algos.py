@@ -72,10 +72,40 @@ def data_filtering(filelocation, num):
         df_vowels.reset_index(drop=True).to_csv("imdb_vowel_names_df.csv", index=False)
 
 
+
+
+
+def less_than(x, pivot, columns):
+    for col in columns:
+        if x[col] < pivot[col]:
+            return True
+        elif x[col] > pivot[col]:
+            return False
+    return False 
+
+def equal(x, pivot, columns):
+    for col in columns:
+        if x[col] != pivot[col]:
+            return False
+    return True
+
+def greater_than(x, pivot, columns):
+    for col in columns:
+        if x[col] > pivot[col]:
+            return True
+        elif x[col] < pivot[col]:
+            return False
+    return False
+
+
+
+
+
 #############################################################################################################
 #Quick Sort
 #############################################################################################################
-def pivot_element(arr, low, hi, columns):
+'''
+def pivot_element1(arr, low, hi, columns):
     pivot_index = (hi + low) // 2
     arr[pivot_index], arr[hi-1] = arr[hi-1], arr[pivot_index]
     
@@ -93,9 +123,10 @@ def pivot_element(arr, low, hi, columns):
     
 def Mega_Quicksort(arr, low, hi, columns):
     if low < hi:
-        pivot = pivot_element(arr, low, hi, columns)
+        pivot = pivot_element1(arr, low, hi, columns)
         Mega_Quicksort(arr, low, pivot, columns)
         Mega_Quicksort(arr, pivot+1, hi, columns)
+'''
 
 def quicksort(arr, columns):
     """
@@ -112,10 +143,18 @@ def quicksort(arr, columns):
     Finally, the function calls itself recursively on the left and right sub-arrays, concatenates
     the result of the recursive calls with the middle sub-array, and returns the final sorted 2D array.
     """
-    sys.setrecursionlimit(10000)
-    Mega_Quicksort(arr, 0, len(arr), columns)
+    #Mega_Quicksort(arr, 0, len(arr), columns)
 
-    return arr
+
+    if len(arr) <= 1:
+        return arr
+    pivot = arr[len(arr) // 2]
+    left = [x for x in arr if less_than(x, pivot, columns[1:])]
+    middle = [x for x in arr if equal(x, pivot, columns[1:])]
+    right = [x for x in arr if greater_than(x, pivot, columns[1:])]
+    return quicksort(left, columns) + middle + quicksort(right, columns)
+
+    #return arr
     #Output Returning array should look like [['tconst','col1','col2'], ['tconst','col1','col2'], ['tconst','col1','col2'],.....]
     #column values in sublist must be according to the columns passed from the testcases.
 
@@ -240,6 +279,7 @@ def shell_sort(arr, columns):
     columns: a list of integers representing the columns to sort the 2D array on
     Finally, returns the final sorted 2D array.
     """
+    print(columns)
     #NEED TO CODE
     #Implement Shell Sort Algorithm
     #return Sorted array
@@ -257,6 +297,7 @@ def shell_sort(arr, columns):
 
             #compare to element one gap to the left
             if compLessThan(arr[i], arr[i-gap], columns):
+            #if arr[i][index] < arr[i-gap][index]:
                 #if in incorrect place in array swap them
                 arr[i], arr[i-gap] = arr[i-gap], arr[i]
 
@@ -267,6 +308,7 @@ def shell_sort(arr, columns):
 
                     #swap if in incorrect place
                     if compLessThan(arr[j], arr[j-gap], columns):
+                    #if arr[j][index] < arr[j-gap][index]:
                         arr[j], arr[j-gap] = arr[j-gap], arr[j]
                     j = j - gap
         
@@ -396,14 +438,19 @@ def compLessThan(item1, item2, columns):
     index = columns[compare]
 
 
-    while parse(item1[index], index) == parse(item2[index], index) and compare < len(columns)-1:
+    while item1[index] == item2[index] and compare < len(columns)-1:
         compare = compare + 1
         index = columns[compare]
 
-    if parse(item1[index], index) < parse(item2[index], index):
+    if item1[index] < item2[index]:
         return True
     else:
         return False
+
+
+
+
+
 
 def compGreaterThan(item1, item2, columns):
     compare = 1
@@ -473,17 +520,21 @@ def sorting_algorithms(file_path, columns, select):
     #Read imdb_dataset.csv
     #write code here Inorder to read imdb_dataset
     df= pd.read_csv(file_path)
-
+    columns.insert(0, "tconst")
     column_vals = []
     
     #if 'tconst' in columns:
-    column_vals.append(0)
 
+    
     for name in columns:
         for i in range(len(df.columns)):
             if name == df.columns[i]:
                 column_vals.append(i)
     
+
+    #for i in range(len(columns)+1):
+       # column_vals.append(i)
+                
     #done
     #column_vals = #convert the columns strings passed from the test cases in the form of indices according to
                   #the imdb_dataset indices for example tconst column is in the index 0. Apart from the testcase
@@ -503,15 +554,37 @@ def sorting_algorithms(file_path, columns, select):
                                     # the other provided column values with respect to columns from the provided
                                     # test cases must be after the tconst value in every sublist. Every sublist
                                     # Represents one record or row from the imdb_dataset.csv (sublist of values).
+    '''
     data = []
+    columns.insert(0, "tconst")
 
     for index, row in df.iterrows():
         temp = []
-        for col_name in df.columns:
+        for col_name in columns:
             temp.append(row[col_name])
         data.append(temp)
 
-        
+    print(data[0])
+    '''
+    
+    #data = df[columns].values.tolist()
+
+    with open(file_path, 'r', encoding='utf-8') as f:
+        reader = csv.DictReader(f)
+        data=[]
+        for row in reader:
+            lst=[]
+            for i in column_vals:
+                if(i==6):
+                    lst.append(float(list(row.values())[i]))
+                elif(i in [3, 4, 7, 8, 11, 12, 14, 15]):
+                    lst.append(float(list(row.values())[i]))
+                else:
+                    lst.append(str(list(row.values())[i]).strip())
+            data.append(lst)
+    l = len(column_vals)
+    column_vals = [i for i in range(l)]
+    
 
 #############################################################################################################
 # Donot Modify Below Code

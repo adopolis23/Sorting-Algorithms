@@ -67,34 +67,7 @@ def parse(x, index):
         return x
 #########
 
-#selection sort code
-def selection_sort(arr, columns):
-    """
-    arr: a list of lists representing the 2D array to be sorted
-    columns: a list of integers representing the columns to sort the 2D array on
-    Finally, returns the final sorted 2D array.
-    """
-    #NEED TO CODE
-    #Implement Selection Sort Algorithm
-    #return Sorted array
 
-    index = columns[1]
-
-    for i in range(len(arr)):
-        minIndex = i
-
-        for j in range(i+1, len(arr)):
-            if compLessThan(arr[j], arr[minIndex], columns):
-                minIndex = j
-        
-        #if another element is the minimum then swap the elements
-        if i != minIndex:
-            tmp = arr[minIndex]
-            arr[minIndex] = arr[i]
-            arr[i] = tmp
-
-
-    return arr
 
 #merge sort code
 def merge(left, right, columns):
@@ -134,6 +107,23 @@ def mergeSort(arr, columns):
     right = mergeSort(right, columns)
     
     return merge(left, right, columns)
+
+
+
+
+
+
+
+def test():
+    df = pd.read_csv("Individual/Sorted_1.csv")
+    print(df.head)
+    df = df.iloc[1:, :]
+    print(df.head)
+
+
+
+
+
 
 ####################################################################################
 # Mystery_Function
@@ -180,38 +170,47 @@ def Mystery_Function(file_path, memory_limitation, columns):
 
     
     data_remaining = True
-    files_with_data = 0
 
     #while there are still files with data in them
     while data_remaining:
         
+        files_with_data = 0
+
         #minfileindex stores the index of the file with the beginning elem being the smallest
         min_file_index = 1
-
-        #for every file
+        df1 = pd.read_csv(file_path + "/Sorted_1.csv")
+        df1_top = df1.values[:1]
+        min_value = df1_top[0]
         for i in range(1, num_files):
+            df1 = pd.read_csv(file_path + "/Sorted_" + str(1) + ".csv")
+            if df1.empty:
+                continue
+            min_file_index = i
+            df1_top = df1.values[:1]
+            min_value = df1_top[0]
 
+        #for every file find the one with the min at the top
+        for i in range(1, num_files):
             #read file into datafram
             df = pd.read_csv(file_path + "/Sorted_" + str(i) + ".csv")
+
+            #if the file is empty continue else count how many files still have data in them
+            if df.empty:
+                continue
+            else:
+                files_with_data = files_with_data + 1
+
+            #get the top row
             df_top = df.values[:1]
             
-            
-            
-            '''
-            #convert dataframe to list
-            data = []
-            for index, row in df_top.iterrows():
-                temp = []
-                #temp.append(row[0])
-                for col_name in df_top.columns:
-                    #if col_name in columns:
-                    temp.append(row[col_name])
-                data.append(temp)
-            '''
-
-            break
-            
-        data_remaining = False
+            #check if less than current min if so save values
+            if compLessThan(df_top[0], min_value, column_vals):
+                min_value = df_top[0]
+                min_file_index = i
+        
+        #if there are no more files with data
+        if files_with_data == 0:
+            data_remaining = False
 
     #f = pd.read_csv("Final/test.csv")
     #if f.empty:
@@ -268,8 +267,8 @@ def data_chuncks(file_path, columns, memory_limitation):
                 temp = []
                 #temp.append(row[0])
                 for col_name in block.columns:
-                    #if col_name in columns:
-                    temp.append(row[col_name])
+                    if col_name in columns:
+                        temp.append(row[col_name])
                 chuncks_2000.append(temp)
             
             chuncks_2000 = mergeSort(chuncks_2000, column_vals)
@@ -301,8 +300,6 @@ def data_chuncks(file_path, columns, memory_limitation):
 
 #Test Case 15
 #data_chuncks('imdb_dataset.csv', ['startYear','runtimeMinutes' ,'primaryTitle'], 2000)
-
-
 
 
 
