@@ -33,12 +33,11 @@ def compLessThan(item1, item2, columns):
     compare = 1
     index = columns[compare]
 
-
-    while parse(item1[index], index) == parse(item2[index], index) and compare < len(columns)-1:
+    while item1[index] == item2[index] and compare < len(columns)-1:
         compare = compare + 1
         index = columns[compare]
 
-    if parse(item1[index], index) < parse(item2[index], index):
+    if item1[index] < item2[index]:
         return True
     else:
         return False
@@ -121,6 +120,37 @@ def test():
     print(df.head)
 
 
+def file_min_index(filepath, num_files, column_vals):
+    min_index = 1
+    min_item = []
+
+    data_remaining = False
+    #for each file
+    for i in range(1, num_files):
+        df = pd.read_csv(filepath + "/Sorted_" + str(i) + ".csv")
+
+        #if file is empty do nothing
+        if df.empty:
+            continue
+        else:
+            data_remaining = True
+
+        #get the top(smallest) value in file
+        df_top = df.values[:1][0]
+
+        #check if this is the first file looked at or this item is smaller than the current min
+        if len(min_item)==0 or compLessThan(df_top, min_item, column_vals):
+            min_item = df_top
+            min_index = i
+    
+    if data_remaining == False:
+        return -1
+    
+    #return the min index
+    return min_index
+        
+        
+
 
 
 
@@ -129,92 +159,59 @@ def test():
 # Mystery_Function
 ####################################################################################
 def Mystery_Function(file_path, memory_limitation, columns):
-    """
-    # file_path :  file_path for Individual Folder (datatype : String)
-    # memory_limitation : At each time how many records from the dataframe can be loaded (datatype : integer : 2000)
-    # columns : the columns on which dataset needs to be sorted (datatype : list of strings)
-    # Load the 2000 chunck of data every time into Data Structure called List of Sublists which is named as "chuncks_2000"
-    # **NOTE : In this Mystery_Function records are accessed from only the folder Individual.
+    
+    #setup
 
-    #Store all the output files in Folder named "Final".
-    #The below Syntax will help you to store the sorted files :
-                # name_of_csv = "Final/Sorted_" + str(i + 1)
-                # sorted_df.reset_index(drop=True).to_csv(name_of_csv, index=False)
-    #Output csv files must be named in the format Sorted_1, Sorted_2,...., Sorted_93
-    # ***NOTE : Every output csv file must have 2000 sorted records except for the last ouput csv file which might have less
-                #than 2000 records.
-    """
+    #generate column_vals list
+    columns.insert(0, "tconst")
+    column_vals = [i for i in range(len(columns))]
 
-    column_names = ["tconst", "primaryTitle", "originalTitle", "startYear", "runtimeMinutes", "genres", "averageRating", "numVotes", "ordering", "category", "seasonNumber", "episodeNumber", "primaryName", "birthYear", "deathYear", "primaryProfession"]
-    column_vals = []
-    column_vals.append(0)
 
-    for name in columns:
-        for i in range(len(column_names)):
-            if name == column_names[i]:
-                column_vals.append(i)
-
-    #Need to Code
-    #Helps to Sort all the 1,84,265 rows with limitation.
-
-    #Load the 2000 chunck of data every time into Data Structure called List of Sublists which is named as "chuncks_2000"
-    chuncks_2000=FixedSizeList(2000)
-
-    file_index = 1
+    #find number of files
     num_files = 1
-
-    while os.path.isfile("Individual/Sorted_" + str(num_files) + ".csv"):
+    while os.path.isfile(file_path + "/Sorted_" + str(num_files) + ".csv"):
         num_files = num_files + 1
-
     print(str(num_files-1) + " files detected")
 
-    
+    #list with memory limitation
+    chuncks_2000=FixedSizeList(memory_limitation)
+
+
+
+    #computation
+    file_index = 1
     data_remaining = True
-
-    #while there are still files with data in them
     while data_remaining:
-        
-        files_with_data = 0
 
-        #minfileindex stores the index of the file with the beginning elem being the smallest
-        min_file_index = 1
-        df1 = pd.read_csv(file_path + "/Sorted_1.csv")
-        df1_top = df1.values[:1]
-        min_value = df1_top[0]
-        for i in range(1, num_files):
-            df1 = pd.read_csv(file_path + "/Sorted_" + str(1) + ".csv")
-            if df1.empty:
-                continue
-            min_file_index = i
-            df1_top = df1.values[:1]
-            min_value = df1_top[0]
-
-        #for every file find the one with the min at the top
-        for i in range(1, num_files):
-            #read file into datafram
-            df = pd.read_csv(file_path + "/Sorted_" + str(i) + ".csv")
-
-            #if the file is empty continue else count how many files still have data in them
-            if df.empty:
-                continue
-            else:
-                files_with_data = files_with_data + 1
-
-            #get the top row
-            df_top = df.values[:1]
-            
-            #check if less than current min if so save values
-            if compLessThan(df_top[0], min_value, column_vals):
-                min_value = df_top[0]
-                min_file_index = i
-        
-        #if there are no more files with data
-        if files_with_data == 0:
+        #find file with min
+        min_index = file_min_index(file_path, num_files, column_vals)
+        #print("Min Index Found: " + str(min_index))
+        if min_index == -1:
             data_remaining = False
+            continue
 
-    #f = pd.read_csv("Final/test.csv")
-    #if f.empty:
-        #print("empty dataframe")
+        #take top of that file and put into chunks2k
+        df = pd.read_csv(file_path + "/Sorted_" + str(min_index) + ".csv")
+        df_top = df.values[:1][0]
+
+        print("Adding value #: " + str(len(chuncks_2000)))
+        chuncks_2000.append(df_top)
+
+        #save file without that index in it
+        df = df.iloc[1:, :]
+        df.reset_index(drop=True).to_csv("Individual/Sorted_"+str(min_index)+".csv", index=False)
+
+
+        #when chunks 2k is full output into file
+        if(len(chuncks_2000) == memory_limitation):
+            tmp = pd.DataFrame(chuncks_2000)
+            tmp.reset_index(drop=True).to_csv("Final/Sorted_"+str(file_index)+".csv", index=False)
+            chuncks_2000.clear()
+
+
+
+
+
 
 
 
@@ -250,10 +247,23 @@ def data_chuncks(file_path, columns, memory_limitation):
         column_vals = []
         column_vals.append(0)
 
+        #for name in columns:
+            #for i in range(len(column_names)):
+                #if name == column_names[i]:
+                    #column_vals.append(i)
+                    
+        columns.insert(0, "tconst")
+        column_vals = []
+    
+        #if 'tconst' in columns:
+
+    
         for name in columns:
             for i in range(len(column_names)):
                 if name == column_names[i]:
                     column_vals.append(i)
+        
+        column_vals = [i for i in range(len(column_vals))]
 
         #Load the 2000 chunck of data every time into Data Structure called List of Sublists which is named as "chuncks_2000"
         chuncks_2000=FixedSizeList(2000)
@@ -296,7 +306,7 @@ def data_chuncks(file_path, columns, memory_limitation):
 #data_chuncks('imdb_dataset.csv', ['startYear'], 2000)
 
 #Test Case 14
-#data_chuncks('imdb_dataset.csv', ['primaryTitle'], 2000)
+data_chuncks('imdb_dataset.csv', ['primaryTitle'], 2000)
 
 #Test Case 15
 #data_chuncks('imdb_dataset.csv', ['startYear','runtimeMinutes' ,'primaryTitle'], 2000)
