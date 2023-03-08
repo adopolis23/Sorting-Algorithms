@@ -120,7 +120,7 @@ def test():
     print(df.head)
 
 
-def file_min_index(filepath, num_files, column_vals):
+def file_min_index(filepath, num_files, column_vals, data_tracker):
     min_index = 1
     min_item = []
 
@@ -128,15 +128,15 @@ def file_min_index(filepath, num_files, column_vals):
     #for each file
     for i in range(1, num_files):
         df = pd.read_csv(filepath + "/Sorted_" + str(i) + ".csv")
-
+        
         #if file is empty do nothing
-        if df.empty:
+        if data_tracker[i-1] >= len(df.index)-1:
             continue
         else:
             data_remaining = True
 
         #get the top(smallest) value in file
-        df_top = df.values[:1][0]
+        df_top = df.values[:][data_tracker[i-1]]
 
         #check if this is the first file looked at or this item is smaller than the current min
         if len(min_item)==0 or compLessThan(df_top, min_item, column_vals):
@@ -176,6 +176,8 @@ def Mystery_Function(file_path, memory_limitation, columns):
     #list with memory limitation
     chuncks_2000=FixedSizeList(memory_limitation)
 
+    #create an array of size numfiles all zeros
+    data_tracker = [0] * (num_files-1)
 
 
     #computation
@@ -184,22 +186,23 @@ def Mystery_Function(file_path, memory_limitation, columns):
     while data_remaining:
 
         #find file with min
-        min_index = file_min_index(file_path, num_files, column_vals)
-        #print("Min Index Found: " + str(min_index))
+        min_index = file_min_index(file_path, num_files, column_vals, data_tracker)
+        print("Min Index Found: " + str(min_index))
         if min_index == -1:
             data_remaining = False
             continue
 
         #take top of that file and put into chunks2k
         df = pd.read_csv(file_path + "/Sorted_" + str(min_index) + ".csv")
-        df_top = df.values[:1][0]
+        df_top = df.values[:][data_tracker[min_index-1]]
+        data_tracker[min_index-1] = data_tracker[min_index-1] + 1
 
-        print("Adding value #: " + str(len(chuncks_2000)))
+        #print("Adding value #: " + str(len(chuncks_2000)))
         chuncks_2000.append(df_top)
 
         #save file without that index in it
-        df = df.iloc[1:, :]
-        df.reset_index(drop=True).to_csv("Individual/Sorted_"+str(min_index)+".csv", index=False)
+        #df = df.iloc[1:, :]
+        #df.reset_index(drop=True).to_csv("Individual/Sorted_"+str(min_index)+".csv", index=False)
 
 
         #when chunks 2k is full output into file
@@ -306,7 +309,7 @@ def data_chuncks(file_path, columns, memory_limitation):
 #data_chuncks('imdb_dataset.csv', ['startYear'], 2000)
 
 #Test Case 14
-data_chuncks('imdb_dataset.csv', ['primaryTitle'], 2000)
+#data_chuncks('imdb_dataset.csv', ['primaryTitle'], 2000)
 
 #Test Case 15
 #data_chuncks('imdb_dataset.csv', ['startYear','runtimeMinutes' ,'primaryTitle'], 2000)
