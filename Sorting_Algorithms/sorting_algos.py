@@ -32,6 +32,7 @@ def data_filtering(filelocation, num):
          if num == 4 -> filter data based on primary Names which start with vowel character.
 
     """
+    #read the csv file into a dataframe
     df= pd.read_csv(filelocation)
 
     if(num==1):
@@ -104,30 +105,6 @@ def greater_than(x, pivot, columns):
 #############################################################################################################
 #Quick Sort
 #############################################################################################################
-'''
-def pivot_element1(arr, low, hi, columns):
-    pivot_index = (hi + low) // 2
-    arr[pivot_index], arr[hi-1] = arr[hi-1], arr[pivot_index]
-    
-    place_index = 0
-    
-    for i in range(hi-1):
-        if arr[i][columns[1]] <= arr[hi-1][columns[1]]:
-            arr[place_index], arr[i] = arr[i], arr[place_index]
-            place_index = place_index + 1
-        
-    arr[hi-1], arr[place_index] = arr[place_index], arr[hi-1]
-    
-    return place_index
-    
-    
-def Mega_Quicksort(arr, low, hi, columns):
-    if low < hi:
-        pivot = pivot_element1(arr, low, hi, columns)
-        Mega_Quicksort(arr, low, pivot, columns)
-        Mega_Quicksort(arr, pivot+1, hi, columns)
-'''
-
 def quicksort(arr, columns):
     """
     The function performs the QuickSort algorithm on a 2D array (list of lists), where
@@ -143,15 +120,19 @@ def quicksort(arr, columns):
     Finally, the function calls itself recursively on the left and right sub-arrays, concatenates
     the result of the recursive calls with the middle sub-array, and returns the final sorted 2D array.
     """
-    #Mega_Quicksort(arr, 0, len(arr), columns)
-
-
+    #if the array size is less than or equal to 1 we return the array
     if len(arr) <= 1:
         return arr
+    
+    #choose the pivot as the element in the middle of the array
     pivot = arr[len(arr) // 2]
+
+    #list comp to find the left right and middle of the array
     left = [x for x in arr if less_than(x, pivot, columns[1:])]
     middle = [x for x in arr if equal(x, pivot, columns[1:])]
     right = [x for x in arr if greater_than(x, pivot, columns[1:])]
+
+    #return quicksort of the left plus the middle element plus the right elem
     return quicksort(left, columns) + middle + quicksort(right, columns)
 
     #return arr
@@ -171,11 +152,12 @@ def selection_sort(arr, columns):
     #Implement Selection Sort Algorithm
     #return Sorted array
 
-    index = columns[1]
-
+    #for each item in the array
     for i in range(len(arr)):
+        #min index is the index of the current item
         minIndex = i
 
+        #for each element from i to end of array
         for j in range(i+1, len(arr)):
             if compLessThan(arr[j], arr[minIndex], columns):
                 minIndex = j
@@ -213,8 +195,7 @@ def max_heapify(arr, n, i, columns):
     leftChild = i*2 + 1
     rightChild = i*2 + 2
 
-    #arr[leftChild][columns[1]] > arr[maxVal][columns[1]]
-    #arr[rightChild][columns[1]] > arr[maxVal][columns[1]]
+
 
     #if left child exists and is greater than the current max then max is now left child
     if leftChild < n and compGreaterThan(arr[leftChild], arr[maxVal], columns):
@@ -247,6 +228,8 @@ def build_max_heap(arr, n, i, columns):
     #NEED TO CODE
     #Implement heapify algorithm here
 
+    #for each element in array starting at n//2-1 going to 0
+    #do a max heapify on the node
     for j in range(n//2 -1, -1, -1):
         max_heapify(arr, n, j, columns)
 
@@ -260,8 +243,10 @@ def heap_sort(arr, columns):
     #Implement Heap Sort Algorithm
     #return Sorted array
 
+    #creates the max heap from the data
     build_max_heap(arr, len(arr), 0, columns)
 
+    #from the last element down to the first
     for i in range(len(arr)-1, 0, -1):
         arr[i], arr[0] = arr[0], arr[i]
         max_heapify(arr, i, 0, columns)
@@ -279,11 +264,9 @@ def shell_sort(arr, columns):
     columns: a list of integers representing the columns to sort the 2D array on
     Finally, returns the final sorted 2D array.
     """
-    print(columns)
     #NEED TO CODE
     #Implement Shell Sort Algorithm
     #return Sorted array
-    index = columns[1]
 
     #chose a starting gap in this case we will use len of array / 2
     gap = len(arr) // 2
@@ -337,20 +320,23 @@ def merge(left, right, columns):
     #NEED TO CODE
     #Implement merge Logic
     #return Sorted array
-    index = columns[1]
     sol = []
 
+    #while there are still elements left in both arrays
     while len(left)>0 and len(right)>0:
-        #left[0][index] <= right[0][index]
+
+        #if the front of left array is smaller remove and add to sol
         if not compGreaterThan(left[0], right[0], columns):
             x = left[0]
             left = left[1:]
             sol.append(x)
+        #else take front of right and add it
         else:
             x = right[0]
             right = right[1:]
             sol.append(x)
 
+    #add the remaining elements to sol
     while len(left)>0:
         x = left[0]
         left = left[1:]
@@ -380,16 +366,20 @@ def merge_sort(data, columns):
     #Need to Code
     #Implement Merge Sort Algorithm
 
+    #mid is initialized to be the middle of the array
     mid = len(data) // 2
 
+    #l and r are each side of mid respectivly
     l = data[:mid]
     r = data[mid:]
 
+    #apply merge sort on each side
     l = merge_sort(l, columns)
     r = merge_sort(r, columns)
 
     #return Sorted array
     return merge(l, r, columns)
+
     #Output Returning array should look like [['tconst','col1','col2'], ['tconst','col1','col2'], ['tconst','col1','col2'],.....]
     #column values in sublist must be according to the columns passed from the testcases.
 
@@ -404,7 +394,6 @@ def insertion_sort(arr, columns):
     """
     b = list(arr)
 
-    index = columns[1] # index = 3
 
     #for each element in array
     for i in range(1, len(arr)):
@@ -432,7 +421,7 @@ def insertion_sort(arr, columns):
 
 
 
-
+#function that takes in two lists and compares them based on columns
 def compLessThan(item1, item2, columns):
     compare = 1
     index = columns[compare]
@@ -451,7 +440,7 @@ def compLessThan(item1, item2, columns):
 
 
 
-
+#function that takes in two lists and compares them based on columns
 def compGreaterThan(item1, item2, columns):
     compare = 1
     index = columns[compare]
@@ -465,6 +454,7 @@ def compGreaterThan(item1, item2, columns):
     else:
         return False
     
+#function takes an input and returns it as an int if its a string that can be changed to an int for compare functions
 def parse(x, index):
     if isinstance(x, str):
         if x.isdigit() and index != 1:
@@ -523,7 +513,6 @@ def sorting_algorithms(file_path, columns, select):
     columns.insert(0, "tconst")
     column_vals = []
     
-    #if 'tconst' in columns:
 
     
     for name in columns:
@@ -532,8 +521,6 @@ def sorting_algorithms(file_path, columns, select):
                 column_vals.append(i)
     
 
-    #for i in range(len(columns)+1):
-       # column_vals.append(i)
                 
     #done
     #column_vals = #convert the columns strings passed from the test cases in the form of indices according to
@@ -554,20 +541,8 @@ def sorting_algorithms(file_path, columns, select):
                                     # the other provided column values with respect to columns from the provided
                                     # test cases must be after the tconst value in every sublist. Every sublist
                                     # Represents one record or row from the imdb_dataset.csv (sublist of values).
-    '''
-    data = []
-    columns.insert(0, "tconst")
 
-    for index, row in df.iterrows():
-        temp = []
-        for col_name in columns:
-            temp.append(row[col_name])
-        data.append(temp)
-
-    print(data[0])
-    '''
     
-    #data = df[columns].values.tolist()
 
     with open(file_path, 'r', encoding='utf-8') as f:
         reader = csv.DictReader(f)

@@ -882,7 +882,6 @@ def testcase_12_2():
 ################
 testcase = {}
 
-'''
 testcase['testcase_1_1'] = testcase_1_1()
 testcase['testcase_1_2'] = testcase_1_2()
 testcase['testcase_1_3'] = testcase_1_3()
@@ -895,15 +894,19 @@ testcase['testcase_3_3'] = testcase_3_3()
 testcase['testcase_4_1'] = testcase_4_1()
 testcase['testcase_4_2'] = testcase_4_2()
 testcase['testcase_4_3'] = testcase_4_3()
+
+#5_1 and 5_2will pass it just takes a bit (~2-4 min)   :(
 testcase['testcase_5_1'] = testcase_5_1()
 testcase['testcase_5_2'] = testcase_5_2()
-testcase['testcase_5_3'] = testcase_5_3()
+
+#5_3 will pass after really long time
+#testcase['testcase_5_3'] = testcase_5_3()
+
+
+#some of these will take a little bit (~150 seconds)
 testcase['testcase_6_1'] = testcase_6_1()
 testcase['testcase_6_2'] = testcase_6_2()
 testcase['testcase_6_3'] = testcase_6_3()
-'''
-
-#7-1 - 12-1 passed
 testcase['testcase_7_1'] = testcase_7_1()
 testcase['testcase_7_2'] = testcase_7_2()
 testcase['testcase_7_3'] = testcase_7_3()

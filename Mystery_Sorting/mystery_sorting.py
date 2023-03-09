@@ -111,15 +111,6 @@ def mergeSort(arr, columns):
 
 
 
-
-
-def test():
-    df = pd.read_csv("Individual/Sorted_1.csv")
-    print(df.head)
-    df = df.iloc[1:, :]
-    print(df.head)
-
-
 def file_min_index(filepath, num_files, column_vals, data_tracker):
     min_index = 1
     min_item = []
@@ -147,7 +138,7 @@ def file_min_index(filepath, num_files, column_vals, data_tracker):
         return -1
     
     #return the min index
-    return min_index
+    return min_index, min_item
         
         
 
@@ -186,19 +177,19 @@ def Mystery_Function(file_path, memory_limitation, columns):
     while data_remaining:
 
         #find file with min
-        min_index = file_min_index(file_path, num_files, column_vals, data_tracker)
-        print("Min Index Found: " + str(min_index))
+        min_index, min_item = file_min_index(file_path, num_files, column_vals, data_tracker)
+        #print("Min Index Found: " + str(min_index))
         if min_index == -1:
             data_remaining = False
             continue
 
         #take top of that file and put into chunks2k
-        df = pd.read_csv(file_path + "/Sorted_" + str(min_index) + ".csv")
-        df_top = df.values[:][data_tracker[min_index-1]]
+        #df = pd.read_csv(file_path + "/Sorted_" + str(min_index) + ".csv")
+        #df_top = df.values[:][data_tracker[min_index-1]]
         data_tracker[min_index-1] = data_tracker[min_index-1] + 1
 
         #print("Adding value #: " + str(len(chuncks_2000)))
-        chuncks_2000.append(df_top)
+        chuncks_2000.append(min_item)
 
         #save file without that index in it
         #df = df.iloc[1:, :]
@@ -208,7 +199,9 @@ def Mystery_Function(file_path, memory_limitation, columns):
         #when chunks 2k is full output into file
         if(len(chuncks_2000) == memory_limitation):
             tmp = pd.DataFrame(chuncks_2000)
+            print("Creating file: " + "Final/Sorted_"+str(file_index)+".csv")
             tmp.reset_index(drop=True).to_csv("Final/Sorted_"+str(file_index)+".csv", index=False)
+            file_index = file_index + 1
             chuncks_2000.clear()
 
 
@@ -248,18 +241,12 @@ def data_chuncks(file_path, columns, memory_limitation):
         """
         column_names = ["tconst", "primaryTitle", "originalTitle", "startYear", "runtimeMinutes", "genres", "averageRating", "numVotes", "ordering", "category", "seasonNumber", "episodeNumber", "primaryName", "birthYear", "deathYear", "primaryProfession"]
         column_vals = []
-        column_vals.append(0)
 
-        #for name in columns:
-            #for i in range(len(column_names)):
-                #if name == column_names[i]:
-                    #column_vals.append(i)
+        #add 0 to column vals for the tconst column
+        column_vals.append(0)
                     
         columns.insert(0, "tconst")
         column_vals = []
-    
-        #if 'tconst' in columns:
-
     
         for name in columns:
             for i in range(len(column_names)):
@@ -272,21 +259,24 @@ def data_chuncks(file_path, columns, memory_limitation):
         chuncks_2000=FixedSizeList(2000)
         file_index = 1
 
-
+        #for each block of size "memory_limit"
         for block in pd.read_csv(file_path, chunksize=memory_limitation):
-            #data = []
-
+            
+            #for each for in the block
             for index, row in block.iterrows():
                 temp = []
-                #temp.append(row[0])
                 for col_name in block.columns:
                     if col_name in columns:
                         temp.append(row[col_name])
                 chuncks_2000.append(temp)
             
+            #sort chunks 2000 with merge sort
             chuncks_2000 = mergeSort(chuncks_2000, column_vals)
             
+            #change chunks 2k into a dataframe
             df = pd.DataFrame(chuncks_2000)
+
+            #save dataframe to a csv file and clear the chunks list
 
             print("Creating File: Individual/Sorted_" + str(file_index))
             df.reset_index(drop=True).to_csv("Individual/Sorted_"+str(file_index)+".csv", index=False)
@@ -306,7 +296,7 @@ def data_chuncks(file_path, columns, memory_limitation):
 #Enable only one Function each from data_chuncks and Mystery_Function at a time
 
 #Test Case 13
-#data_chuncks('imdb_dataset.csv', ['startYear'], 2000)
+data_chuncks('imdb_dataset.csv', ['startYear'], 2000)
 
 #Test Case 14
 #data_chuncks('imdb_dataset.csv', ['primaryTitle'], 2000)
