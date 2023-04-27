@@ -6,11 +6,6 @@ import math
 import pandas as pd
 import sys
 
-"""
-Note : For test cases 7-10, you need to extract the required data (filter on conditions mentioned above)
-and rename it to appropriate name as mentioned in the test case descriptions. You need to write the code
-to perform this extraction and renaming, at the start of the skeleton file.
-"""
 
 column_names= ['tconst', 'primaryTitle', 'originalTitle', 'startYear',
                'runtimeMinutes', 'genres', 'averageRating', 'numVotes', 'ordering',
@@ -22,51 +17,25 @@ column_names= ['tconst', 'primaryTitle', 'originalTitle', 'startYear',
 # Data Filtering
 #############################################################################################################
 def data_filtering(filelocation, num):
-    """
-    Data Filtering is for the test cases from 7 to 10.
-    filelocation: imdb_dataset.csv location
-    num: if num == 1 -> filter data based on years (years in range 1941 to 1955)
-         if num == 2 -> filter data based on genres (genres are either ‘Adventure’ or ‘Drama’)
-         if num == 3 -> filter data based on primaryProfession (if primaryProfession column contains substrings
-                        {‘assistant_director’, ‘casting_director’, ‘art_director’, ‘cinematographer’} )
-         if num == 4 -> filter data based on primary Names which start with vowel character.
 
-    """
     #read the csv file into a dataframe
     df= pd.read_csv(filelocation)
 
     if(num==1):
-        #NEED TO CODE
-        #Implement your logic here for Filtering data based on years (years in range 1941 to 1955)
-        #df_year = #Store your filtered dataframe here
-        #print(df.head)
-
-        #test = df["genres"]
-        #print(test.head)
 
         df_year = df[(df["startYear"] >= 1941) & (df["startYear"] <= 1955)]
         df_year.reset_index(drop=True).to_csv("imdb_years_df.csv", index=False)
 
     if(num==2):
-        #NEED TO CODE
-        #Implement your logic here for Filtering data based on genres (genres are either ‘Adventure’ or ‘Drama’)
-        #df_genres = #Store your filtered dataframe here
         df_genres = df[(df["genres"] == "Adventure") | (df["genres"] == "Drama")]
         df_genres.reset_index(drop=True).to_csv("imdb_genres_df.csv", index=False)
     if(num==3):
-        #NEED TO CODE
-        #Implement your logic here for Filtering data based on primaryProfession (if primaryProfession column contains
-        #substrings {‘assistant_director’, ‘casting_director’, ‘art_director’, ‘cinematographer’} )
-        #df_professions = #Store your filtered dataframe here
-        
+
         df_professions = df[df["primaryProfession"].str.contains("assistant_director") | df["primaryProfession"].str.contains("casting_director") | df["primaryProfession"].str.contains("art_director") | df["primaryProfession"].str.contains("cinematographer")]
 
         df_professions.reset_index(drop=True).to_csv("imdb_professions_df.csv", index=False)
     if(num==4):
-        #NEED TO CODE
-        #Implement your logic here for Filtering data based on primary Names which start with vowel character.
-        #df_vowels = #Store your filtered dataframe here
-
+ 
         df_vowels = df[(df["primaryName"].str[0] == 'A') | (df["primaryName"].str[0] == 'E') | (df["primaryName"].str[0] == 'I') | (df["primaryName"].str[0] == 'O') | (df["primaryName"].str[0] == 'U')]
 
         print(df_vowels.head)
@@ -135,10 +104,6 @@ def quicksort(arr, columns):
     #return quicksort of the left plus the middle element plus the right elem
     return quicksort(left, columns) + middle + quicksort(right, columns)
 
-    #return arr
-    #Output Returning array should look like [['tconst','col1','col2'], ['tconst','col1','col2'], ['tconst','col1','col2'],.....]
-    #column values in sublist must be according to the columns passed from the testcases.
-
 #############################################################################################################
 #Selection Sort
 #############################################################################################################
@@ -148,9 +113,7 @@ def selection_sort(arr, columns):
     columns: a list of integers representing the columns to sort the 2D array on
     Finally, returns the final sorted 2D array.
     """
-    #NEED TO CODE
-    #Implement Selection Sort Algorithm
-    #return Sorted array
+
 
     #for each item in the array
     for i in range(len(arr)):
@@ -170,8 +133,7 @@ def selection_sort(arr, columns):
 
 
     return arr
-    #Output Returning array should look like [['tconst','col1','col2'], ['tconst','col1','col2'], ['tconst','col1','col2'],.....]
-    #column values in sublist must be according to the columns passed from the testcases.
+    #Output Returning array  [['tconst','col1','col2'], ['tconst','col1','col2'], ['tconst','col1','col2'],.....]
 
 #############################################################################################################
 #Heap Sort
@@ -239,9 +201,6 @@ def heap_sort(arr, columns):
     # columns: store the column indices from the dataframe.
     Finally, returns the final sorted 2D array.
     """
-    #NEED TO CODE
-    #Implement Heap Sort Algorithm
-    #return Sorted array
 
     #creates the max heap from the data
     build_max_heap(arr, len(arr), 0, columns)
@@ -252,8 +211,7 @@ def heap_sort(arr, columns):
         max_heapify(arr, i, 0, columns)
 
     return arr
-    #Output Returning array should look like [['tconst','col1','col2'], ['tconst','col1','col2'], ['tconst','col1','col2'],.....]
-    #column values in sublist must be according to the columns passed from the testcases.
+    #Output Returning array  [['tconst','col1','col2'], ['tconst','col1','col2'], ['tconst','col1','col2'],.....]
 
 #############################################################################################################
 #Shell Sort
@@ -264,9 +222,7 @@ def shell_sort(arr, columns):
     columns: a list of integers representing the columns to sort the 2D array on
     Finally, returns the final sorted 2D array.
     """
-    #NEED TO CODE
-    #Implement Shell Sort Algorithm
-    #return Sorted array
+
 
     #chose a starting gap in this case we will use len of array / 2
     gap = len(arr) // 2
@@ -317,9 +273,6 @@ def merge(left, right, columns):
     with the remaining elements of the other sub-array and returns the result as the final
     sorted 2D array.
     """
-    #NEED TO CODE
-    #Implement merge Logic
-    #return Sorted array
     sol = []
 
     #while there are still elements left in both arrays
@@ -359,12 +312,8 @@ def merge_sort(data, columns):
     columns: a list of integers representing the columns to sort the 2D array on
     Finally, the function returns the result of the merge operation as the final sorted 2D array.
     """
-    #NEED TO CODE
     if len(data) <= 1:
         return data
-    #mid = #Mid value
-    #Need to Code
-    #Implement Merge Sort Algorithm
 
     #mid is initialized to be the middle of the array
     mid = len(data) // 2
@@ -481,32 +430,8 @@ def sorting_algorithms(file_path, columns, select):
     the array corresponding to a row in the CSV file and each element in a row corresponding to a value
     in a specific column.
 
-    More Detailed Description:
-
-    df= #read imdb_dataset.csv data set using pandas library
-
-    column_vals = #convert the columns strings passed from the test cases in the form of indices according to
-                  #the imdb_dataset indices for example tconst column is in the index 0. Apart from the testcase
-                  #Columns provided you must also include 0 column in the first place of list in column_vals
-                  #for example if you have provided with columns {'startYear', 'primaryTitle'} which are in the
-                  #indices {3,1}. So the column_vals should look like [0,3,1].
-
-    data = #convert the dataframes into list of sublists, each sublist consists of values corresponds to
-           #the particular columns which are passed from the test cases. In addition to these columns, each
-           #sublist should consist of tconst values which are used to identify each column uniquely.
-           #At the end of sorting all the rows in the dataset by using any algorithm you need to
-           #Return : List of tconst strings which are obtained after sorting the dataset.
-           #Example data looks like [['tconst string 1', 'startYear value 1', 'primaryTitle String 1'],
-                                    #['tconst string 1', 'startYear value 1', 'primaryTitle String 1'],
-                                    #................so on ]
-                                    # NOTE : tconst string value must be in first position of every sublist and
-                                    # the other provided column values with respect to columns from the provided
-                                    # test cases must be after the tconst value in every sublist. Every sublist
-                                    # Represents one record or row from the imdb_dataset.csv (sublist of values).
     """
-    #NEED TO CODE
 
-    #done
     #Read imdb_dataset.csv
     #write code here Inorder to read imdb_dataset
     df= pd.read_csv(file_path)
@@ -522,25 +447,6 @@ def sorting_algorithms(file_path, columns, select):
     
 
                 
-    #done
-    #column_vals = #convert the columns strings passed from the test cases in the form of indices according to
-                  #the imdb_dataset indices for example tconst column is in the index 0. Apart from the testcase
-                  #Columns provided you must also include 0 column in the first place of list in column_vals
-                  #for example if you have provided with columns {'startYear', 'primaryTitle'} which are in the
-                  #indices {3,1}. So the column_vals should look like [0,3,1].
-    #done
-    #data = #convert the dataframes into list of sublists, each sublist consists of values corresponds to
-           #the particular columns which are passed from the test cases. In addition to these columns, each
-           #sublist should consist of tconst values which are used to identify each column uniquely.
-           #At the end of sorting all the rows in the dataset by using any algorithm you need to
-           #Return : List of tconst strings which are obtained after sorting the dataset.
-           #Example data looks like [['tconst string 1', 'startYear value 1', 'primaryTitle String 1'],
-                                    #['tconst string 1', 'startYear value 1', 'primaryTitle String 1'],
-                                    #................so on ]
-                                    # NOTE : tconst string value must be in first position of every sublist and
-                                    # the other provided column values with respect to columns from the provided
-                                    # test cases must be after the tconst value in every sublist. Every sublist
-                                    # Represents one record or row from the imdb_dataset.csv (sublist of values).
 
     
 
@@ -560,11 +466,6 @@ def sorting_algorithms(file_path, columns, select):
     l = len(column_vals)
     column_vals = [i for i in range(l)]
     
-
-#############################################################################################################
-# Donot Modify Below Code
-#############################################################################################################
-
     if(select==1):
         start_time = time.time()
         output_list = insertion_sort(data, column_vals)

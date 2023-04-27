@@ -13,9 +13,6 @@ column_names= ['tconst', 'primaryTitle', 'originalTitle', 'startYear',
                'category', 'job', 'seasonNumber', 'episodeNumber', 'primaryName', 'birthYear',
                'deathYear', 'primaryProfession']
 
-####################################################################################
-# Donot Modify this Code
-####################################################################################
 class FixedSizeList(list):
     def __init__(self, size):
         self.max_size = size
@@ -144,11 +141,6 @@ def file_min_index(filepath, num_files, column_vals, data_tracker):
 
 
 
-
-
-####################################################################################
-# Mystery_Function
-####################################################################################
 def Mystery_Function(file_path, memory_limitation, columns):
     
     #setup
@@ -184,16 +176,10 @@ def Mystery_Function(file_path, memory_limitation, columns):
             continue
 
         #take top of that file and put into chunks2k
-        #df = pd.read_csv(file_path + "/Sorted_" + str(min_index) + ".csv")
-        #df_top = df.values[:][data_tracker[min_index-1]]
         data_tracker[min_index-1] = data_tracker[min_index-1] + 1
 
         #print("Adding value #: " + str(len(chuncks_2000)))
         chuncks_2000.append(min_item)
-
-        #save file without that index in it
-        #df = df.iloc[1:, :]
-        #df.reset_index(drop=True).to_csv("Individual/Sorted_"+str(min_index)+".csv", index=False)
 
 
         #when chunks 2k is full output into file
@@ -216,21 +202,6 @@ def Mystery_Function(file_path, memory_limitation, columns):
 ####################################################################################
 def data_chuncks(file_path, columns, memory_limitation):
         """
-        # file_path : dataset file_path for imdb_dataset.csv (datatype : String)
-        # columns : the columns on which dataset needs to be sorted (datatype : list of strings)
-        # memory_limitation : At each time how many records from the dataframe can be loaded (datatype : integer)
-        # Load the 2000 chunck of data every time into Data Structure called List of Sublists which is named as "chuncks_2000"
-        # NOTE : This data_chuncks function uses the records from imdb_dataset. Only 2000 records needs to be loaded at a
-                # Time in order to process for sorting using merge sort algorithm. After sorting 2000 records immediately
-                # Store those 2000 sorted records into Floder named Individual by following Naming pattern given below.
-        #Store all the output files in Folder named "Individual".
-        #Output csv files must be named in the format Sorted_1, Sorted_2,...., Sorted_93
-        #The below Syntax will help you to store the sorted files :
-                    # name_of_csv = "Individual/Sorted_" + str(i + 1)
-                    # sorted_df.reset_index(drop=True).to_csv(name_of_csv, index=False)
-
-        # ***NOTE : Every output csv file must have 2000 sorted records except for the last ouput csv file which
-                    might have less than 2000 records.
 
         Description:
         This code reads a CSV file, separates the data into chunks of data defined by the memory_limitation parameter,
@@ -285,12 +256,6 @@ def data_chuncks(file_path, columns, memory_limitation):
             chuncks_2000.clear()
             
 
-        #Write code for Extracting only 2000 records at a time from imdb_dataset.csv
-
-        #Passing the 2000 Extracted Records and Columns indices for sorting the data
-        #column_indxes are Extracted from the imdb_dataset indices by mapping the columns need to sort on which are
-        #passed from the testcases.
-        #arr=merge_sort(arr,column_indxes)
 
 
 #Enable only one Function each from data_chuncks and Mystery_Function at a time
